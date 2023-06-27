@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "804783016919",
+    "project_id": "realestateagency-1-2f141",
+    "storage_bucket": "realestateagency-1-2f141.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804783016919:android:b3ebc2df66824d10a29992",
+        "android_client_info": {
+          "package_name": "real.erstate.realestateagency_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804783016919-k80kl6stgr20dc841lbga01t78j3an65.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7bzGJfFcw5N5L4D-PawII8nbjgVG3wJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804783016919-k80kl6stgr20dc841lbga01t78j3an65.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

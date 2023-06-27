@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="real.erstate.realestateagency_1.ui.fragment.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+
+
+        <action
+            android:id="@+id/action_navigation_home_to_realEstateFragment2"
+            app:destination="@id/realEstateFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="real.erstate.realestateagency_1.ui.fragment.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="real.erstate.realestateagency_1.ui.fragment.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_add"
+        android:name="real.erstate.realestateagency_1.ui.fragment.add.AddFragment"
+        android:label="@string/title_add"
+        tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.filter.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" />
+    <fragment
+        android:id="@+id/allFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.all.AllFragment"
+        android:label="fragment_all"
+        tools:layout="@layout/fragment_all" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/onBoardFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.home.view_pager.OnBoardFragment"
+        android:label="fragment_on_board"
+        tools:layout="@layout/fragment_on_board" />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
+    <fragment
+        android:id="@+id/realEstateFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragment"
+        android:label="fragment_real_estate"
+        tools:layout="@layout/fragment_real_estate">
+
+
+        <action
+            android:id="@+id/action_realEstateFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+        <argument
+            android:name="asd"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.home.photo.PhotoFragment"
+        android:label="fragment_photo"
+        tools:layout="@layout/fragment_photo" >
+
+
+        <argument
+            android:name="qwe"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardVpFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.OnBoardVpFragment"
+        android:label="fragment_on_board_vp"
+        tools:layout="@layout/fragment_on_board_vp" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_about_us"
+        android:name="real.erstate.realestateagency_1.ui.fragment.about_us.AboutUsFragment"
+        android:label="@string/title"
+        tools:layout="@layout/fragment_about_us" />
+</navigation>

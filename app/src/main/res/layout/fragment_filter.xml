@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context=".ui.fragment.filter.FilterFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_grey"
+                android:layout_width="343dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="13.74dp"
+                android:background="@drawable/bg_filter_grey"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/con"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_filter_wraite"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <TextView
+                    android:id="@+id/tv_fil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Фильтр"
+                    android:layout_marginTop="27dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_load_obav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="Тип недвижимости"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_fil"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/rv_fil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_load_obav"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/con_elit"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/card_iv"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="28.87dp"
+                            android:layout_marginEnd="12.87dp"
+                            app:cardCornerRadius="12dp"
+                            android:gravity="center"
+                            android:background="@drawable/bg_fav_btn"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/shop_fil" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#626975"
+                            android:text="Комерция"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginStart="33.87dp"
+                            android:layout_marginEnd="17.87dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/card_iv"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/con_vtor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/con_elit">
+
+                        <LinearLayout
+                            android:id="@+id/card_f"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="12.87dp"
+                            android:layout_marginEnd="12.87dp"
+                            app:cardCornerRadius="12dp"
+                            android:gravity="center"
+                            android:background="@drawable/bg_fav_btn"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_screensaver"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/elite_fil"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#626975"
+                            android:text="Элитка"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginStart="5.87dp"
+                            android:layout_marginEnd="5.87dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/card_f"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:id="@+id/con_dom"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/con_vtor">
+
+                        <LinearLayout
+                            android:id="@+id/card_olo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:background="@drawable/bg_fav_btn"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="12.87dp"
+                            android:layout_marginEnd="12.87dp"
+                            app:cardCornerRadius="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_scr"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/secondary_fil"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#626975"
+                            android:text="Вторичная"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginStart="5.87dp"
+                            android:layout_marginEnd="5.87dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/card_olo"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/con_com"
+                        app:layout_constraintStart_toEndOf="@id/con_dom"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/card_opo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="12.87dp"
+                            android:layout_marginEnd="12.87dp"
+                            android:gravity="center"
+                            android:background="@drawable/bg_fav_btn"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_oi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/house_fil"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#626975"
+                            android:text="Дом"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginStart="5.87dp"
+                            android:layout_marginEnd="5.87dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginBottom="20dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/card_opo"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_cena"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_fil"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:textStyle="bold"
+                    android:text="Цена"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_valu"
+                    app:layout_constraintStart_toEndOf="@id/ll_one"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cena">
+
+
+                    <EditText
+                        android:id="@+id/et_two"
+                        android:layout_width="65dp"
+                        android:layout_height="40dp"
+                        android:textSize="16sp"
+                        android:textColor="#A4A6AF"
+                        android:hint="Цена от"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="14.5dp"
+                        android:layout_marginBottom="14.5dp"
+                        android:backgroundTint="#F4F6FB"/>
+
+                    <LinearLayout
+                        android:id="@+id/valute_two"
+                        android:layout_width="41dp"
+                        android:layout_height="23dp"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="32.5dp"
+                        android:layout_marginTop="18.5dp"
+                        android:background="@drawable/bg_rec"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="14.5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#141416"
+                            android:text="$"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="8dp"
+                            android:textStyle="bold"/>
+
+
+                        <ImageView
+                            android:layout_marginStart="4.13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9.37dp"
+                            android:layout_marginBottom="9.37dp"
+                            android:layout_marginEnd="10.13dp"
+                            android:src="@drawable/stroke_fil"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_valu"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cena">
+
+
+                    <EditText
+                        android:id="@+id/et_one"
+                        android:layout_width="65dp"
+                        android:layout_height="40dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textColorHint="#A4A6AF"
+                        android:hint="Цена от"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="14.5dp"
+                        android:layout_marginBottom="14.5dp"
+                        android:backgroundTint="#F4F6FB"/>
+
+                    <LinearLayout
+                        android:id="@+id/valute"
+                        android:layout_width="41dp"
+                        android:layout_height="23dp"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="32.5dp"
+                        android:layout_marginTop="18.5dp"
+                        android:background="@drawable/bg_rec"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="14.5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#141416"
+                            android:text="$"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="8dp"
+                            android:textStyle="bold"/>
+
+
+                        <ImageView
+                            android:layout_marginStart="4.13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9.37dp"
+                            android:layout_marginBottom="9.37dp"
+                            android:layout_marginEnd="10.13dp"
+                            android:src="@drawable/stroke_fil"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_rai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:text="Район"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/ll_one"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    tools:listitem="@layout/item_tv_filter"
+                    app:spanCount="3"
+                    android:layout_marginTop="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rai" />
+                <TextView
+                    android:id="@+id/tv_pv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:text="Площадь"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/rv"/>
+                <TextView
+                    android:id="@+id/tv_dil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:textSize="12sp"
+                    android:text="0 – 1000+м2"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv"/>
+
+                <TextView
+                    android:id="@+id/tv_obav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_valu"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="0 м2"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="14sp"
+                    android:textColor="#1C3A75"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dil"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+
+                <TextView
+                    android:id="@+id/tv_square"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_valu"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="1000+ м2"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="14sp"
+                    android:textColor="#1C3A75"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dil"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/search_bar"
+                    android:layout_width="343dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0.0"
+                    android:valueTo="1000.0"
+                    app:labelBehavior="gone"
+                    app:values="@array/default_values"
+                    app:layout_constraintTop_toBottomOf="@id/tv_obav"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="С парковкой"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="31dp"
+                    android:layout_marginStart="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_bar"/>
+
+                <Switch
+                    android:id="@+id/sawtooth"
+                    android:layout_width="51dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="31dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_bar"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <TextView
+                    android:id="@+id/tv_ys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="С участком"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="31dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_km"/>
+
+                <Switch
+                    android:id="@+id/sawtooth_two"
+                    android:layout_width="51dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="31dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_km"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+                <TextView
+                    android:id="@+id/tv_ych"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="31dp"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:text="Комнаты"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/sawtooth_two"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ych"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:listitem="@layout/item_room"
+                    android:layout_marginTop="20dp"
+                    app:spanCount="4"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+
+                <TextView
+                    android:id="@+id/tv_pv_ty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:text="Этаж"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/rv_room"/>
+
+                <TextView
+                    android:id="@+id/tv_dil_ty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:textSize="12sp"
+                    android:text="0 – 1000+ м2"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_room"/>
+
+                <TextView
+                    android:id="@+id/tv_ob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_valu"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="2"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="14sp"
+                    android:textColor="#1C3A75"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dil_ty"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+
+                <TextView
+                    android:id="@+id/tv_sq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_valu"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="20+"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="14sp"
+                    android:textColor="#1C3A75"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dil_ty"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/search_bar_two"
+                    android:layout_width="343dp"
+                    android:layout_marginTop="16dp"
+                    android:valueFrom="2.0"
+                    android:valueTo="20.0"
+                    app:labelBehavior="gone"
+                    app:values="@array/default_val"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ob"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!-- app:labelBehavior="gone"-->
+                <TextView
+                    android:id="@+id/btn_ad_fil"
+                    android:layout_width="343dp"
+                    android:layout_height="56dp"
+                    android:text="Показать результаты"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:background="@drawable/ml_k"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_bar_two"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

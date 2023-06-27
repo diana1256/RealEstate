@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">RealEstateAgency_№1</string>
+    <string name="title_home">Главная</string>
+    <string name="title_dashboard">Поиск</string>
+    <string name="title_notifications">Избранное</string>
+    <string name="title">О нас</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_add">Публикации</string>
+    <string name="best_deals">Лучшие предложения</string>
+    <string name="see_all">Посмотреть все</string>
+    <string name="updates">Обьявления</string>
+    <string name="todo">TODO</string>
+    <string name="_100000_160000">100000$-160000$</string>
+    <string name="golden_square">Золотой квадрат</string>
+    <string name="three">3</string>
+    <string name="_100_2_180_2">100 м2-180 м2</string>
+    <string name="_32">32 обьявления</string>
+
+    <array name="default_values">
+        <item>0.0</item> <!-- Значение для первого ползунка -->
+        <item>1000.0</item> <!-- Значение для второго ползунка -->
+    </array>
+
+    <array name="default_val">
+        <item>2.0</item> <!-- Значение для первого ползунка -->
+        <item>20.0</item> <!-- Значение для второго ползунка -->
+    </array>
+</resources>

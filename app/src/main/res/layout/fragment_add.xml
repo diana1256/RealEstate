@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.add.AddFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/vp_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/onboard_vp" />
+
+                    <TextView
+                        android:id="@+id/tvb"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="135dp"
+                        android:layout_marginTop="55dp"
+                        android:background="@drawable/baseline_add_a_photo_24" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/con"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_image">
+
+
+                    <EditText
+                        android:id="@+id/et_id"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Id apartment"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="40dp"
+                        android:text="Опубликовать"
+                        android:textAllCaps="false"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_id" />
+
+
+                    <EditText
+                        android:id="@+id/et_text"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Teкст"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btnPk" />
+
+                    <EditText
+                        android:id="@+id/et_location"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Адрес"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@id/et_km"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_text" />
+
+
+                    <EditText
+                        android:id="@+id/et_km"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="136dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Квадратный метp"
+                        android:paddingStart="10dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/et_location"
+                        app:layout_constraintTop_toBottomOf="@id/et_text" />
+
+                    <EditText
+                        android:id="@+id/et_room"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Количество комнат"
+                        android:paddingStart="15dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@id/et_phone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_location" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toStartOf="@id/et_phone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_room"
+                        tools:listitem="@layout/item_add" />
+
+                    <EditText
+                        android:id="@+id/et_phone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="190dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Номер телефона"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/et_room"
+                        app:layout_constraintTop_toBottomOf="@id/et_location" />
+
+
+                    <EditText
+                        android:id="@+id/et_dil"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Тип недвижимости"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@id/et_san"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_room" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toStartOf="@id/et_san"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_dil"
+                        tools:listitem="@layout/item_add" />
+
+                    <EditText
+                        android:id="@+id/et_san"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Цена только цифты"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/et_dil"
+                        app:layout_constraintTop_toBottomOf="@id/et_room" />
+
+
+                    <EditText
+                        android:id="@+id/et_er"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Валюта Название"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_san" />
+
+                    <EditText
+                        android:id="@+id/et_ver"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Валюта Символ"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_er" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_valute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="20dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_er"
+                        tools:listitem="@layout/item_add" />
+
+
+                    <EditText
+                        android:id="@+id/et_dv_zxx"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Серия"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_ver" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_series"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="20dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_dv_zxx"
+                        tools:listitem="@layout/item_add" />
+
+
+                    <EditText
+                        android:id="@+id/et_dv_x"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Документы"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_er" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_docum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="20dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/et_dv_x"
+                        app:layout_constraintTop_toBottomOf="@id/et_dv_x"
+                        tools:listitem="@layout/item_add" />
+
+                    <EditText
+                        android:id="@+id/et_df"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Комуникации"
+                        android:imeOptions="actionSearch"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/et_er"
+                        app:layout_constraintTop_toBottomOf="@id/et_san" />
+
+                    <EditText
+                        android:id="@+id/et_dav"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Регион"
+                        android:paddingStart="15dp"
+                        android:textColorHint="#120D0D"
+                        android:textSize="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_dv_zxx" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_regifn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="20dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="@id/et_dav"
+                        app:layout_constraintTop_toBottomOf="@id/et_dav"
+                        tools:listitem="@layout/item_add" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_layout_title"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:hint="Информация"
+                        android:textColorHint="#120D0D"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_dav">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:gravity="top"
+                            android:imeOptions="actionSearch"
+                            android:inputType="textMultiLine"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Ваши данные"
+                    android:textColor="@color/black"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/con" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/con_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="#FFFF"
+                    android:layout_marginBottom="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv">
+
+
+                    <EditText
+                        android:id="@+id/et_layout_fio"
+                        android:layout_width="270dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Login admin"
+                        android:paddingStart="15dp"
+                        android:textColorHint="@color/black"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <EditText
+                        android:id="@+id/et_layout_fty"
+                        android:layout_width="270dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_black_tv_line"
+                        android:hint="Password 123qwe"
+                        android:paddingStart="15dp"
+                        android:textColor="@color/black"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_layout_fio" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:text="Достать токен"
+                        android:textAllCaps="false"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_layout_fty" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_kkk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Опубликовать"
+                        android:textAllCaps="false"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
