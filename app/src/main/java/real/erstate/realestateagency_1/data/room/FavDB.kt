@@ -10,7 +10,7 @@ import android.util.Log
 
 class FavDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DB_VERSION) {
     companion object {
-        const val DB_VERSION = 1
+        const val DB_VERSION = 4
         const val DATABASE_NAME = "CoffeeDB"
         const val TABLE_NAME = "favoriteTable"
         const val KEY_ID = "id"
@@ -22,20 +22,22 @@ class FavDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, D
         const val LOCAL = "local"
         const val SAN = "san"
         const val KM = "km"
+        const val PRICE = "price"
     }
 
     private val CREATE_TABLE = ("CREATE TABLE $TABLE_NAME ("
             + "$KEY_ID TEXT, $ITEM_TITLE TEXT, "
             + "$ITEM_IMAGE TEXT, $FAVORITE_STATUS TEXT, "
             + "$DIL TEXT, $ROOM TEXT, "
-            + "$LOCAL TEXT, $SAN TEXT, $KM TEXT)")
+            + "$LOCAL TEXT, $SAN TEXT, $KM TEXT," +
+            "$PRICE TEXT)")
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(CREATE_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // Implement this method if you want to handle database upgrades
+
     }
 
     fun insertEmpty() {
@@ -49,7 +51,7 @@ class FavDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, D
         }
     }
 
-    fun insertIntoTheDatabase(item_title: String, item_image:String, id: String, fav_status: String, dil: String, room: String, san: String, local: String, km: String) {
+    fun insertIntoTheDatabase(item_title: String, item_image:String, id: String, fav_status: String, dil: String, room: String, san: String, local: String, km: String,itemId:String) {
         val db = this.writableDatabase
         val cv = ContentValues()
         cv.put(ITEM_TITLE, item_title)
@@ -60,6 +62,7 @@ class FavDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, D
         cv.put(SAN, san)
         cv.put(LOCAL, local)
         cv.put(KM, km)
+        cv.put(PRICE, itemId)
         cv.put(FAVORITE_STATUS, fav_status)
         db.insert(TABLE_NAME, null, cv)
         Log.d("FavDB Status", "$item_title, favstatus - $fav_status - $cv")
@@ -84,3 +87,4 @@ class FavDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, D
         return db.rawQuery(sql, null,null)
     }
 }
+

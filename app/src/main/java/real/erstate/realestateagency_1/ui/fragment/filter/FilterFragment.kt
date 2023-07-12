@@ -13,14 +13,17 @@ import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.databinding.FragmentFilterBinding
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.Region
+import real.erstate.realestateagency_1.ui.util.Pref
 
 class FilterFragment() : Fragment(){
     private val viewModel : FilterViewModel by  viewModel()
     private lateinit var binding: FragmentFilterBinding
     private var adress = ""
+    private var ass = ""
     private var room = ""
     private var km = ""
-    private var h = ""
+    private var type = ""
+    private var etek = ""
     private var sena = ""
     private var isButtonClicked = false
     private var isButtonClcked = false
@@ -43,12 +46,13 @@ class FilterFragment() : Fragment(){
     }
 
     private fun okk(){
-        km = "${binding.etOne.text.toString()}$-${binding.etTwo.text.toString()}$"
+        km = "${binding.etOne.text}$-${binding.etTwo.text}$"
         binding.cardIv.setOnClickListener {
             isButtonClicked = !isButtonClicked
             if (isButtonClicked) {
                 binding.cardIv.setBackgroundResource(R.drawable.bg_lyue)
                 binding.ivIcon.setImageResource(R.drawable.shop_card)
+               type =  binding.komer.text.toString()
             } else {
                 binding.ivIcon.setImageResource(R.drawable.shop_fil)
                 binding.cardIv.setBackgroundResource(R.drawable.bg_fav_btn)
@@ -60,6 +64,7 @@ class FilterFragment() : Fragment(){
             if (isButtonClcked) {
                 binding.cardF.setBackgroundResource(R.drawable.bg_lyue)
                 binding.ivScreensaver.setImageResource(R.drawable.elite_card)
+                type =  binding.elite.text.toString()
             } else {
                 binding.ivScreensaver.setImageResource(R.drawable.elite_fil)
                 binding.cardF.setBackgroundResource(R.drawable.bg_fav_btn)
@@ -71,6 +76,7 @@ class FilterFragment() : Fragment(){
             if (isButtonCcked) {
                 binding.cardOlo.setBackgroundResource(R.drawable.bg_lyue)
                 binding.ivScr.setImageResource(R.drawable.secyn_wr)
+                type =  binding.vtori.text.toString()
             } else {
                 binding.ivScr.setImageResource(R.drawable.secondary_fil)
                 binding.cardOlo.setBackgroundResource(R.drawable.bg_fav_btn)
@@ -82,6 +88,7 @@ class FilterFragment() : Fragment(){
             if (isButtCcked) {
                 binding.cardOpo.setBackgroundResource(R.drawable.bg_lyue)
                 binding.ivOi.setImageResource(R.drawable.home_wr)
+                type =  binding.dom.text.toString()
             } else {
                 binding.ivOi.setImageResource(R.drawable.house_fil)
                 binding.cardOpo.setBackgroundResource(R.drawable.bg_fav_btn)
@@ -100,7 +107,7 @@ class FilterFragment() : Fragment(){
             } else {
                 "${maxValue.toString()} м2"
             }
-            km = "${binding.tvObav.text.toString()}-${binding.tvSquare.text.toString()}"
+            km = "${binding.tvObav.text}- ${binding.tvSquare.text}"
         }
 
         binding.searchBarTwo.addOnChangeListener { slider, _, _ ->
@@ -113,6 +120,7 @@ class FilterFragment() : Fragment(){
             } else {
                 "${maxValue.toString()}"
             }
+            etek = "${binding.tvOb.text}-${binding.tvSq.text} этаж"
 
         }
     }
@@ -131,14 +139,32 @@ class FilterFragment() : Fragment(){
 
     private fun onClikListene() {
         binding.btnAdFil.setOnClickListener {
-            sena = "${binding.etOne.text}$-${binding.etTwo.text}$"
+            sena = "${binding.etOne.text}$- ${binding.etTwo.text}$"
             isButtCcked = !isButtCcked
             if (isButtCcked) {
                 binding.btnAdFil.setBackgroundResource(R.drawable.bg_lyue)
             }
-            findNavController().navigate(R.id.navigation_home)
+            Pref(requireContext()).setSena(sena)
+            Pref(requireContext()).setKm(km)
+            Pref(requireContext()).setAdress(ass)
+            Pref(requireContext()).setType(type)
+            Pref(requireContext()).setEtak(etek)
+            Pref(requireContext()).setRoomCount(room)
+            Pref(requireContext()).setAdressId(adress)
+            findNavController().navigateUp()
             search()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Pref(requireContext()).setSena(sena)
+        Pref(requireContext()).setKm(km)
+        Pref(requireContext()).setAdress(ass)
+        Pref(requireContext()).setType(type)
+        Pref(requireContext()).setEtak(etek)
+        Pref(requireContext()).setRoomCount(room)
+        Pref(requireContext()).setAdressId(adress)
     }
 
     private fun onViewModel() {
@@ -161,20 +187,20 @@ class FilterFragment() : Fragment(){
     private fun onRoom(pos: String){
         val firstValue = pos.split(" ")[0]
         room = firstValue
-        Log.i("cdvf", "onRoom:$room")
     }
 
-    private fun type(pos: Region){
+    private fun type(pos: Region,lo:String){
         adress = pos.id.toString()
         Log.i("okijuhy", "type:$adress")
-        h = pos.name
+        ass = lo
+        Log.i("swdefrg", "type:$lo")
     }
 
     fun search(){
         viewModel.search(adress,room).observe(requireActivity()){
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.i("ijuhygt", "search:${it.data}")
+                    Log.i("iygt", "search:${it.data}")
                 }
                 Status.ERROR -> {
                     Log.i("olp", "onViewModel:${it.message}")

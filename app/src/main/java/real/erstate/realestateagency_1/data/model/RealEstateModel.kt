@@ -8,12 +8,12 @@ data class ApartmentListResponse(
     val count: Int,
     val next: String?,
     val previous: String?,
-    val results: List<Apartment>
+    var results: List<Apartment>
 )
 
 @SuppressLint("ParcelCreator")
 data class Apartment(
-    var id: Int,
+    var id: String,
     val title: String,
     val square: String,
     val address: String,
@@ -23,7 +23,7 @@ data class Apartment(
     val price: String,
     val room_count: String,
     val lat: String,
-    var idF: String,
+    val lng: String,
     val currency: Currency,
     val created_at: String,
     val type: ApartmentType,
@@ -107,6 +107,9 @@ data class addUser(
     var login: String,
     var password: String
 )
+
+
+
 data class User(
     val id: Int,
     var is_superuser: Boolean,
@@ -198,7 +201,7 @@ data class AdsAp(
     val id: Int,
     val name: String,
     val phone: String,
-     val created_at: String
+    val created_at: String
 )
 
 data class RewList(
@@ -235,3 +238,43 @@ data class DataResponseList(
     val previous: String?,
     val results: List<Currency>
 )
+
+
+data class Pere(
+    val type: String?,
+    val sena: String?,
+    val km: String?,
+    val adres: String?,
+    val etak: String?,
+    val roomCount: String?
+) : Parcelable {
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(type)
+        dest.writeString(sena)
+        dest.writeString(km)
+        dest.writeString(adres)
+        dest.writeString(etak)
+        dest.writeString(roomCount)
+    }
+
+    companion object CREATOR : Parcelable.Creator<Pere> {
+        override fun createFromParcel(parcel: Parcel): Pere {
+            return Pere(
+                type = parcel.readString(),
+                sena = parcel.readString(),
+                km = parcel.readString(),
+                adres = parcel.readString(),
+                etak = parcel.readString(),
+                roomCount = parcel.readString()
+            )
+        }
+
+        override fun newArray(size: Int): Array<Pere?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

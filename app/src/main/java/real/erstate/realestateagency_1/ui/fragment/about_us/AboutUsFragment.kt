@@ -2,6 +2,7 @@ package real.erstate.realestateagency_1.ui.fragment.about_us
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import real.erstate.realestateagency_1.R
@@ -25,17 +27,10 @@ import real.erstate.realestateagency_1.data.model.Ads
 
 @Suppress("DEPRECATION")
 class AboutUsFragment : Fragment() {
-
     private lateinit var binding : FragmentAboutUsBinding
-    private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
     val viewModel: AboutUsViewModel by viewModel()
     var gt = ""
     var cdvf = ""
-    private val delayTime = 2000L // 5 seconds
-
-    lateinit var  adapter : Adapter
-    private val list = arrayListOf<ModelUs>()
     private val listLoad = arrayListOf<ModelUs>()
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -65,31 +60,31 @@ class AboutUsFragment : Fragment() {
 
     @SuppressLint("QueryPermissionsNeeded")
     private fun initClickListener() {
+        binding.item.wertt.setOnClickListener {
+            findNavController().navigate(R.id.reitingFragment)
+        }
+        binding.item.cardBtn.setOnClickListener{
+            openLinkInChrome("https://nedvijimost.kg/")
+        }
         binding.item.cardIv.setOnClickListener {
-            val phoneNumber = "0550900700"
-
-            val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-
-            if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                requireActivity().startActivity(intent)
-            } else {
-                Toast.makeText(requireContext(), "На вашем устройстве не отсутсвует это приложение!!", Toast.LENGTH_SHORT).show()
-            }
+            val phoneNumber = "996550900700"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://wa.me/$phoneNumber")
+            startActivity(intent)
         }
         binding.item.cardF.setOnClickListener {
             openInstagramAccount("number.one.kg/")
         }
         binding.item.cardOlo.setOnClickListener {
-            openTikTokAccount("ZSLB2sF7K/")
+            openTikTokAccount("@nedviijimost.kg")
         }
         binding.item.cardOpo.setOnClickListener {
             makePhoneCall("0550900700")
         }
+
         binding.item.sain.setOnClickListener {
-            val url = "https://chat.openai.com/c/d93d4285-f48f-4fad-aac6-a92d1c422977"
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
+            intent.data = Uri.parse("https://nedvijimost.kg/")
             startActivity(intent)
         }
     }
@@ -130,7 +125,7 @@ class AboutUsFragment : Fragment() {
         intent.data = uri
 
         if (isInstagramInstalled()) {
-            intent.setPackage("/number.one.kg/")
+            intent.setPackage("number.one.kg/")
         }
 
         startActivity(intent)
@@ -156,9 +151,9 @@ class AboutUsFragment : Fragment() {
                 Status.SUCCESS->{
                     viewModel.loading.postValue(false)
                     binding.con.visibility =View.VISIBLE
-                    val adapter = Adapter(it)
-                    binding.item.rvRecyc.adapter = adapter
-                    Log.i("kjnh", "inttView:${it.data}")
+                  val   asd = Adapter(it)
+                    binding.item.rvRecyc.adapter = asd
+                       Log.i("kjnh", "inttView:${it.data}")
                 }
                 Status.LOADING->{
                     viewModel.loading.postValue(true)
@@ -194,6 +189,20 @@ class AboutUsFragment : Fragment() {
 
         }
     }
+
+    fun openLinkInChrome(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        intent.setPackage("com.android.chrome") // Указываем пакет браузера Chrome
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Обработка случая, когда Chrome не установлен
+            // или недоступен на устройстве
+            // Можно вывести сообщение об ошибке или выполнить другие действия
+        }
+    }
+
     fun onWEr(string: String,stri: String){
         val data = Ads(string, stri)
         viewModel.addAds(data).observe(requireActivity()){

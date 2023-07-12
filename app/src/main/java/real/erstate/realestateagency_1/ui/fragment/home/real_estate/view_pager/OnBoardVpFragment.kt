@@ -12,6 +12,7 @@ import real.erstate.realestateagency_1.databinding.FragmentOnBoardVpBinding
 import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.AdapterViewPager.Companion.ON_BOR
 import real.erstate.realestateagency_1.ui.util.loadImage
 import real.erstate.realestateagency_1.data.model.ApartmentImage
+import kotlin.math.log
 
 class OnBoardVpFragment : Fragment(){
 
@@ -27,17 +28,17 @@ class OnBoardVpFragment : Fragment(){
     }
 
     private fun onBoard() {
-      /*  arguments.let {
-            val data = it?.getSerializable(ON_BOR) as ApartmentImage
+       arguments.let {
+           val data = it?.getSerializable(ON_BOR) as ApartmentImage
             binding.plo.loadImage(data.image)
             Log.i("iop", "onBoard:${data.image}")
-        }*/
 
-        binding.plo.setOnClickListener {
-        val img = arguments?.getSerializable(ON_BOR) as? ApartmentImage
-            if (img != null) {
-                onItemClickListener?.invoke(img)
-            }
+           binding.plo.setOnClickListener {
+
+               onItemClickListener?.invoke(data)
+               Log.i("xdcfv", "onBoard:$data")
+
+           }
         }
     }
 

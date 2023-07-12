@@ -12,12 +12,12 @@ import androidx.navigation.ui.setupWithNavController
 import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.databinding.ActivityMainBinding
 import real.erstate.realestateagency_1.ui.fragment.registration.OnRegistrationListener
-import real.estate.realestateagency1.ui.util.Pref
+import real.erstate.realestateagency_1.ui.util.Pref
 
 class MainActivity : AppCompatActivity() , OnRegistrationListener {
 
     private lateinit var binding: ActivityMainBinding
-
+    private var isAdmin : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() , OnRegistrationListener {
         setContentView(binding.root)
         supportActionBar?.hide()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
 
         val navView: BottomNavigationView = binding.navView
 
@@ -39,18 +38,23 @@ class MainActivity : AppCompatActivity() , OnRegistrationListener {
             )
         )
 
-        if (!Pref(applicationContext).isBoardingShowed()){
+      if (!Pref(applicationContext).isBoardingShowed()){
             navController.navigate(R.id.loginFragment)
         } else{
             navController.navigateUp()
         }
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.loginFragment || destination.id == R.id.registrationFragment) {
                 navView.visibility = View.GONE
             } else {
                 navView.visibility = View.VISIBLE
             }
+
+        }
+
+        if (Pref(applicationContext).isProfile() == "admin"){
+            onRegistrationStatusChanged(Pref(applicationContext).isProfile())
+            binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = true
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -58,6 +62,7 @@ class MainActivity : AppCompatActivity() , OnRegistrationListener {
     }
 
     override fun onRegistrationStatusChanged(isAdmin: String) {
-        binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = (isAdmin == "admin")
+        Pref(applicationContext).setProfileUser(isAdmin)
+        binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = (Pref(applicationContext).isProfile() == "admin")
     }
 }

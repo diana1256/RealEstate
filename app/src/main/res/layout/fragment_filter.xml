@@ -99,6 +99,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/komer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
@@ -142,6 +143,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/elite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
@@ -184,6 +186,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/vtori"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
@@ -226,6 +229,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/dom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
@@ -273,7 +277,7 @@
                         android:layout_width="65dp"
                         android:layout_height="40dp"
                         android:textSize="16sp"
-                        android:textColor="#A4A6AF"
+                        android:textColor="#0C0C0C"
                         android:hint="Цена от"
                         android:imeOptions="actionSearch"
                         android:inputType="text"

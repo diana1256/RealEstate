@@ -1,5 +1,6 @@
 package real.erstate.realestateagency_1.ui.fragment.all
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,8 +15,10 @@ import real.erstate.realestateagency_1.data.entity.LoadRel
 import real.erstate.realestateagency_1.databinding.FragmentAllBinding
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.Apartment
+import real.erstate.realestateagency_1.ui.fragment.home.AdapterAll
 import real.erstate.realestateagency_1.ui.fragment.home.AdapterRealEstate
 import real.erstate.realestateagency_1.ui.fragment.home.AdapterTwoLoad
+import real.erstate.realestateagency_1.ui.fragment.home.HomeFragmentDirections
 
 class AllFragment : Fragment() {
 
@@ -31,6 +34,7 @@ class AllFragment : Fragment() {
     ): View {
 
         binding = FragmentAllBinding.inflate(inflater,container,false)
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         onViewModel()
         binding.shimmer.startShimmer()
         repeat(10) {
@@ -56,7 +60,7 @@ class AllFragment : Fragment() {
 
     fun onClick(){
         binding.item.def.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.navigation_home)
         }
     }
 
@@ -69,7 +73,9 @@ class AllFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     allViewModel.loading.postValue(false)
-                    binding.item.rvAll.adapter = AdapterRealEstate(requireActivity(),it,this::onClick)
+                    val fgh = it.data?.results!!.filter { it.best== true }
+                    binding.con.isVisible = true
+                    binding.item.rvAll.adapter = AdapterAll(requireActivity(),fgh,this::onClick)
                 }
                 Status.ERROR -> {
                     allViewModel.loading.postValue(true)
@@ -81,5 +87,9 @@ class AllFragment : Fragment() {
 
     }
 
-    private fun onClick(pos: Apartment){}
+    private fun onClick(apartment: Apartment,id:String){
+        val wer = Apartment(id = id,apartment.title,apartment.square,apartment.address,apartment.communications,apartment.description,apartment.best,apartment.price,apartment.room_count,apartment.lat,apartment.lng,apartment.currency,apartment.created_at,apartment.type,apartment.floor,apartment.document,apartment.series,apartment.region,apartment.apartment_images,apartment.author)
+        val  sd = AllFragmentDirections.actionAllFragmentToAllRealFragment(wer)
+        findNavController().navigate(sd)
+    }
 }

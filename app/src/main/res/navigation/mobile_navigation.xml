@@ -21,13 +21,21 @@
         android:id="@+id/navigation_dashboard"
         android:name="real.erstate.realestateagency_1.ui.fragment.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_realSearchFragment2"
+            app:destination="@id/realSearchFragment2" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="real.erstate.realestateagency_1.ui.fragment.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_realFavFragment3"
+            app:destination="@id/realFavFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_add"
         android:name="real.erstate.realestateagency_1.ui.fragment.add.AddFragment"
@@ -37,12 +45,18 @@
         android:id="@+id/filterFragment"
         android:name="real.erstate.realestateagency_1.ui.fragment.filter.FilterFragment"
         android:label="fragment_filter"
-        tools:layout="@layout/fragment_filter" />
+        tools:layout="@layout/fragment_filter" >
+
+    </fragment>
     <fragment
         android:id="@+id/allFragment"
         android:name="real.erstate.realestateagency_1.ui.fragment.all.AllFragment"
         android:label="fragment_all"
-        tools:layout="@layout/fragment_all" />
+        tools:layout="@layout/fragment_all" >
+        <action
+            android:id="@+id/action_allFragment_to_allRealFragment"
+            app:destination="@id/allRealFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="real.erstate.realestateagency_1.ui.fragment.login.LoginFragment"
@@ -95,4 +109,74 @@
         android:name="real.erstate.realestateagency_1.ui.fragment.about_us.AboutUsFragment"
         android:label="@string/title"
         tools:layout="@layout/fragment_about_us" />
+    <fragment
+        android:id="@+id/reitingFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.about_us.raiting.ReitingFragment"
+        android:label="fragment_reiting"
+        tools:layout="@layout/fragment_reiting" />
+    <fragment
+        android:id="@+id/allRealFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.all.real.AllRealFragment"
+        android:label="fragment_all_real"
+        tools:layout="@layout/fragment_all_real" >
+        <argument
+            android:name="yhnbv"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+        <action
+            android:id="@+id/action_allRealFragment_to_photoAllFragment"
+            app:destination="@id/photoAllFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoAllFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.all.real.photo.PhotoAllFragment"
+        android:label="fragment_photo_all"
+        tools:layout="@layout/fragment_photo_all" >
+
+        <argument
+            android:name="poik"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoSearchFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.dashboard.real.photo.PhotoSearchFragment"
+        android:label="fragment_photo_search"
+        tools:layout="@layout/fragment_photo_search" >
+        <argument
+            android:name="kjhg"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+    </fragment>
+    <fragment
+        android:id="@+id/realSearchFragment2"
+        android:name="real.erstate.realestateagency_1.ui.fragment.dashboard.real.RealSearchFragment"
+        android:label="fragment_real_search"
+        tools:layout="@layout/fragment_real_search" >
+        <action
+            android:id="@+id/action_realSearchFragment2_to_photoSearch_Fragment"
+            app:destination="@id/photoSearchFragment" />
+        <argument
+            android:name="lkjh"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFavFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.notifications.real.photo.PhotoFavFragment"
+        android:label="fragment_photo_fav"
+        tools:layout="@layout/fragment_photo_fav" >
+        <argument
+            android:name="bnmml"
+            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
+    </fragment>
+    <fragment
+        android:id="@+id/realFavFragment"
+        android:name="real.erstate.realestateagency_1.ui.fragment.notifications.real.RealFavFragment"
+        android:label="fragment_real_fav"
+        tools:layout="@layout/fragment_real_fav" >
+        <action
+            android:id="@+id/action_realFavFragment_to_photoFavFragment"
+            app:destination="@id/photoFavFragment" />
+        <argument
+            android:name="lkjh"
+            app:argType="real.erstate.realestateagency_1.data.entity.Favorite" />
+
+    </fragment>
 </navigation>

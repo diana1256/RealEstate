@@ -33,7 +33,6 @@ class RealEstateFragment : Fragment() {
 
     private val args by navArgs<RealEstateFragmentArgs>()
     private var isButtonClicked = false
-    var g = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +47,7 @@ class RealEstateFragment : Fragment() {
         binding.shimmer.startShimmer()
         initView()
         onClik()
+        onViewModel()
         return binding.root
     }
 
@@ -63,7 +63,9 @@ class RealEstateFragment : Fragment() {
         }
 
         binding.item.tvPh.setOnClickListener {
-            makePhoneCall("0550900700")
+            val pri = args.asd.lat
+            val formattedNumber = pri.replace(".0+$".toRegex(), "")
+            makePhoneCall(formattedNumber)
         }
     }
 
@@ -74,11 +76,6 @@ class RealEstateFragment : Fragment() {
         startActivity(intent)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onViewModel()
-    }
-
     @SuppressLint("SetTextI18n")
     private fun onViewModel() {
         binding.con.isVisible = true
@@ -86,10 +83,10 @@ class RealEstateFragment : Fragment() {
         viewModel.loading.observe(requireActivity()) {
             binding.shimmer.isVisible = false
         }
-        viewModel.getImage(args.asd.id.toString()).observe(requireActivity()) {
+        Log.i("edfrgt", "onViewModel:${args.asd.id}")
+        viewModel.getApartment().observe(requireActivity()) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.con.isVisible = true
                     viewModel.loading.postValue(false)
                     Log.i("hbhuju", "onViewModel:${it.data}")
                     binding.item.tvTitle.setText(args.asd.title)
@@ -102,23 +99,21 @@ class RealEstateFragment : Fragment() {
                     binding.item.floor.text = "Этажность : ${args.asd.floor.title}"
                     binding.item.comunikation.text = "Коммуникации : ${args.asd.communications}"
                     binding.item.series.text = "Состояние :${args.asd.series.title}"
-                    binding.item.tvSan.text = args.asd.price
+                    val pri = args.asd.price
+                    binding.item.tvSzsd.text = args.asd.currency.symbol
+                    val formattedNumber = pri.replace(".0+$".toRegex(), "")
+                    binding.item.tvSan.text = formattedNumber
                     binding.item.tvName.text = args.asd.author.first_name
-                    val adapterViewPager = it.data?.apartment_images?.let { it1 ->
-                        AdapterViewPager(
-                            requireActivity(),
-                            it1
-                        )
-                    }
+                    val adapterViewPager = AdapterViewPager(requireActivity(),args.asd)
+                    Log.i("sxdcfr", "onViewModel:$it")
                     binding.item.vpv.adapter = adapterViewPager
+                    binding.con.isVisible = true
                     binding.item.dotsIndicator.attachTo(binding.item.vpv)
-                    g = it.data?.apartment_images.toString()
-
-                    adapterViewPager?.setOnItemClickListener(object :
+                    adapterViewPager.setOnItemClickListener(object :
                         AdapterViewPager.OnItemClickListener {
                         override fun onItemClick(image: ApartmentImage) {
-                            val der = RealEstateFragmentDirections.actionRealEstateFragmentToPhotoFragment(it.data)
-                            findNavController().navigate(der)
+                              val der = RealEstateFragmentDirections.actionRealEstateFragmentToPhotoFragment(args.asd)
+                                findNavController().navigate(der)
                         }
                     })
                 }
@@ -144,7 +139,6 @@ class RealEstateFragment : Fragment() {
             dialog.show()
             val v = view.findViewById<CardView>(R.id.card_iv)
             v.setOnClickListener {
-                shepe(g)
             }
             dialog.window?.setGravity(Gravity.BOTTOM)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)

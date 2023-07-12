@@ -166,4 +166,17 @@ class Repository (private val remoteDataSource: RemoteDataSource) {
         val sear = remoteDataSource.search( region, room)
         emit(sear)
     }
+
+    fun searchSer(region: String,room:String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val sear = remoteDataSource.searchSer( region, room)
+        emit(sear)
+    }
+
+
+    fun searchFil(region: String,room:String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val sear = remoteDataSource.searchFil( region, room)
+        emit(sear)
+    }
 }

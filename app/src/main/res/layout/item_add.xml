@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,9 +14,14 @@
         app:layout_constraintStart_toEndOf="@id/tv_id"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
+        android:textAllCaps="false"
+        app:cornerRadius="10dp"
+        android:layout_marginStart="5dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="#2E3A91"
+        android:backgroundTint="#FFFF"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:background="@drawable/bg_bly_tv_line"/>
+        android:paddingBottom="5dp" />
 
     <TextView
         android:id="@+id/tv_id"

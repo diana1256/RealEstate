@@ -20,7 +20,7 @@ import real.erstate.realestateagency_1.databinding.ItemFavBinding
 import real.erstate.realestateagency_1.data.room.FavDB
 import real.erstate.realestateagency_1.ui.util.loadImage
 
-class AdapterFav(private val context: Context, private val favItemList: MutableList<Favorite>) :
+class AdapterFav(private val context: Context, private val favItemList: MutableList<Favorite>,private val onClick:(Favorite,idf:String) -> Unit) :
     ListAdapter<Favorite, AdapterFav.ViewHolder>(DiffCallback()) {
 
     private lateinit var favDB: FavDB
@@ -37,9 +37,12 @@ class AdapterFav(private val context: Context, private val favItemList: MutableL
         holder.photo.loadImage(favItemList[position].image)
         holder.dil.text = favItemList[position].tvDil
         holder.km.text = favItemList[position].tvKm
+        val pri = favItemList[position].tvSan
+        val formattedNumber = pri.replace(".0+$".toRegex(), "")
         holder.location.text = favItemList[position].tvLocation
-        holder.san.text = favItemList[position].tvSan
+        holder.san.text = formattedNumber
         holder.room.text = favItemList[position].tvRoom
+        holder.status.text = favItemList[position].status
     }
 
     override fun getItemCount(): Int {
@@ -48,6 +51,7 @@ class AdapterFav(private val context: Context, private val favItemList: MutableL
 
     inner class ViewHolder(binding: ItemFavBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        var status:TextView = binding.tvId
         var photo: ImageView = binding.ivPhoto
         var title: TextView = binding.tvTitle
         var heart: ImageView = binding.heart
@@ -56,7 +60,6 @@ class AdapterFav(private val context: Context, private val favItemList: MutableL
         var km: TextView = binding.tvKm
         var san: TextView = binding.tvSan
         var location: TextView = binding.tvLocation
-
         init {
             refLike = FirebaseDatabase.getInstance().reference.child("likes")
             heart.setOnClickListener {

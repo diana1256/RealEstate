@@ -19,28 +19,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <ImageView
+    <RatingBar
         android:id="@+id/iv_star"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/baseline_star_rate_24"
+        android:rating="2"
+        android:progressTint="@color/yelow"
+        android:isIndicator="false"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         app:layout_constraintBottom_toTopOf="@id/desc"
+        android:numStars="5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"/>
-
-
-    <TextView
-        android:id="@+id/iv_sr"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="10dp"
-        android:textColor="@color/black"
-        android:text="4"
-        android:textSize="11sp"
-        app:layout_constraintStart_toEndOf="@id/iv_star"
-        app:layout_constraintBottom_toTopOf="@id/desc"
         app:layout_constraintTop_toBottomOf="@id/tv_name"/>
 
     <TextView

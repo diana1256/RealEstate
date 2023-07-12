@@ -13,7 +13,7 @@ import real.erstate.realestateagency_1.data.model.Image
 import real.erstate.realestateagency_1.data.model.Region
 
 
-class RegionAdapter(private val resource: Resource<DataReonse>, private val onClick: (Region) -> Unit) :
+class RegionAdapter(private val resource: Resource<DataReonse>, private val onClick: (Region,region:String) -> Unit) :
     androidx.recyclerview.widget.ListAdapter<Image, RegionAdapter.ViewHolder>(DiffCallback()) {
 
     private var isButtonClicked = false
@@ -33,7 +33,7 @@ class RegionAdapter(private val resource: Resource<DataReonse>, private val onCl
                     val defaultColor = ContextCompat.getColor(binding.tvTh.context, R.color.black)
                     binding.tvThree.setTextColor(defaultColor)
                 }
-                onClick(task)
+                onClick(task,binding.tvThree.text.toString())
             }
         }
     }

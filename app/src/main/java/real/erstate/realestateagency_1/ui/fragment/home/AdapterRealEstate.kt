@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,13 +26,28 @@ import real.erstate.realestateagency_1.data.local.result.Resource
 import real.erstate.realestateagency_1.data.model.Apartment
 import real.erstate.realestateagency_1.data.model.ApartmentListResponse
 import real.erstate.realestateagency_1.data.room.FavDB
+import real.erstate.realestateagency_1.databinding.ItemTaskBinding
 import real.erstate.realestateagency_1.ui.util.loadImage
 
 
-class AdapterRealEstate(private val context: Context,private val apartment: Resource<ApartmentListResponse>,private val onClick: (Apartment) -> Unit) : ListAdapter<Apartment, AdapterRealEstate.ViewHolder>(DiffCallback()) {
-
+@Suppress("UnusedEquals")
+class AdapterRealEstate(
+    private val context: Context,
+    private val apartment: Resource<ApartmentListResponse>,
+    private val idrr: String,
+    private val onClick: (Apartment,id: Int,er:String) -> Unit
+) : ListAdapter<Apartment, AdapterRealEstate.ViewHolder>(DiffCallback()) {
     private lateinit var favDB: FavDB
     var img = ""
+    val asd = arrayListOf<Apartment>()
+    var idF = ""
+    fun update(list: List<Apartment>){
+        apartment.data?.results = asd
+        asd.clear()
+        asd.addAll(list)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         favDB = FavDB(context)
         val prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
@@ -54,7 +70,7 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(apartment.data?.results?.get(position)!!)
+        apartment.data?.results?.get(position)?.let { holder.bind(it) }
     }
 
     override fun getItemCount(): Int = apartment.data?.results?.size!!
@@ -81,6 +97,7 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
                 tvSan.text = formattedNumber
                 tvRoom.text = item.room_count
                 tvDil.text = item.type.title
+                idF = idrr
                 val apartmentImages = item.apartment_images
                 if(apartmentImages.isNotEmpty()) {
                     val firstImage = apartmentImages[0]
@@ -92,7 +109,7 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
             }
             readCursorData(item, binding, adapterPosition)
             itemView.setOnClickListener {
-                onClick(item)
+                onClick(item,adapterPosition,idrr)
             }
         }
     }
@@ -113,7 +130,7 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
         try {
             while (cursor.moveToNext()) {
                 val itemFavStatus = cursor.getString(cursor.getColumnIndex(FavDB.FAVORITE_STATUS))
-                coffeeItem.id.toString() == itemFavStatus
+                coffeeItem.id = itemFavStatus
 
                 if (itemFavStatus != null && itemFavStatus == "1") {
                     viewHolder.heart.setImageResource(R.drawable.heart_red)
@@ -130,18 +147,30 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
     private fun likeClick(coffeeItem: Apartment, favBtn: ImageView, textLike: TextView) {
         val refLike = FirebaseDatabase.getInstance().reference.child("likes")
         val upvotesRefLike = refLike.child(coffeeItem.id.toString())
-        if (coffeeItem.id == 0) {
-            coffeeItem.id  = 1
+
+        if (coffeeItem.id == "0") {
+            coffeeItem.id = "1"
+
+            var img = ""
+
+            if(coffeeItem.apartment_images.isNotEmpty()) {
+                val firstImage = coffeeItem.apartment_images[0]
+                val imageUrl = firstImage.image
+                img = imageUrl
+                Log.i("ololoyu", "Bind:$imageUrl")
+            }
+
             favDB.insertIntoTheDatabase(
-                coffeeItem.title, img,
-                coffeeItem.id.toString(),
-                coffeeItem.id.toString(),
+                coffeeItem.title,
+                img,
+                coffeeItem.id,
+                coffeeItem.id,
                 coffeeItem.type.title,
                 coffeeItem.room_count,
                 coffeeItem.price,
                 coffeeItem.address,
-                coffeeItem.square
-            )
+                coffeeItem.square,
+            idF)
             favBtn.setImageResource(R.drawable.heart_red)
             favBtn.isSelected = true
 
@@ -168,9 +197,9 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
                 }
             })
 
-        } else if (coffeeItem.id.toString() == "1") {
-            coffeeItem.id.toString() == ""
-            favDB.removeFav(coffeeItem.id.toString())
+        } else if (coffeeItem.id == "1") {
+            coffeeItem.id = ""
+            favDB.removeFav(coffeeItem.id)
             favBtn.setImageResource(R.drawable.heart)
             favBtn.isSelected = false
 
@@ -198,7 +227,6 @@ class AdapterRealEstate(private val context: Context,private val apartment: Reso
             })
         }
     }
-
 
     private class DiffCallback : DiffUtil.ItemCallback<Apartment>() {
         override fun areItemsTheSame(oldItem: Apartment, newItem: Apartment): Boolean {

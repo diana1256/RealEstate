@@ -16,9 +16,8 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
         return repository.setApartment()
     }
 
-
-    fun search(region: String,room:String): LiveData<Resource<ApartmentListResponse>>{
-        return repository.search( region, room)
+    fun search(region:String,room:String): LiveData<Resource<ApartmentListResponse>>{
+        return repository.searchFil( region, room)
     }
 
     fun getRegion(): LiveData<Resource<DataReonse>> {

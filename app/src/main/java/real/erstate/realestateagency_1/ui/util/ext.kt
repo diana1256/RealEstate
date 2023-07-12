@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputEditText
 
 fun showToast(context: Context, message: Any) {
     Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
@@ -21,7 +22,7 @@ fun ImageView.loadImage(image: String){
 }
 
 @SuppressLint("ClickableViewAccessibility")
-fun EditText.setupRecyclerViewOnFocus(recyclerView: RecyclerView) {
+fun TextInputEditText.setupRecyclerViewOnFocus(recyclerView: RecyclerView) {
     this.setOnTouchListener { _, event ->
         if (event.action == MotionEvent.ACTION_DOWN) {
             recyclerView.visibility = View.VISIBLE

@@ -119,4 +119,12 @@ class RemoteDataSource (private val realEstateAPI: RealEstateAPI):
     suspend fun search(region: String,room:String) = getResult {
         realEstateAPI.search(region,room)
     }
+
+    suspend fun searchSer(region: String,room:String) = getResult {
+        realEstateAPI.searchSer(region,room)
+    }
+
+    suspend fun searchFil(region: String,room:String) = getResult {
+        realEstateAPI.searchFil(region,room)
+    }
 }

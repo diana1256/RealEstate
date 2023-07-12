@@ -18,4 +18,12 @@
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="searchHintIcon">@null</item>
     </style>
+
+
+    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:minHeight">12dp</item>
+        <item name="android:maxHeight">5dp</item>
+        <item name="colorControlNormal">@color/grey_col</item>
+        <item name="colorControlActivated">@color/yelow</item>
+    </style>
 </resources>

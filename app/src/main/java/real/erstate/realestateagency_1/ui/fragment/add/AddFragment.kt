@@ -13,17 +13,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import real.erstate.realestateagency_1.R
-import real.erstate.realestateagency_1.databinding.FragmentAddBinding
 import real.erstate.realestateagency_1.ui.util.setupRecyclerViewOnFocus
 import real.erstate.realestateagency_1.ui.util.showToast
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.ApartmentCreate
 import real.erstate.realestateagency_1.data.model.TokenObtainPair
+import real.erstate.realestateagency_1.databinding.FragmentAddBinding
 import java.io.File
 import java.io.FileOutputStream
 
@@ -33,8 +34,7 @@ class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private lateinit var apartmentCreate: ApartmentCreate
     var token = ""
-    private var isButtonClicked = false
-    private val MAX_PHOTOS = 25
+    private val MAX_PHOTOS = 24
     private var selectedPhotos = mutableListOf<Uri>()
     private lateinit var selectedImageUri: Uri
     private val adapter = YourViewPagerAdapter()
@@ -48,7 +48,6 @@ class AddFragment : Fragment() {
         onClik()
         onVi()
         edit()
-        addUpload()
         return binding.root
     }
 
@@ -94,7 +93,6 @@ class AddFragment : Fragment() {
             }
     }
 
-
     private val activityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -103,7 +101,9 @@ class AddFragment : Fragment() {
                         binding.vpImage.adapter = adapter
                         selectedPhotos.add(uri)
                         adapter.addTask(uri)
-                        Log.i("lokij", ":$uri")
+                        selectedImageUri = uri
+                        binding.dfgh.isVisible = uri.toString().isEmpty()
+                        Log.i("lokij", ":$selectedPhotos")
                     } else {
                         showToast(requireContext(), "Вы достигли предела $MAX_PHOTOS")
                     }
@@ -119,234 +119,36 @@ class AddFragment : Fragment() {
         inputStream?.copyTo(outputStream)
         val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("image", file.name, requestBody)
-        viewModel.setImage("Bearer $token", part, binding.etId.text.toString().toInt())
-            .observe(requireActivity()) {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        Log.i("xscd", "upload:${it.data}")
-                    }
-
-                    Status.ERROR -> {
-                        showToast(requireContext(), "Произошла ошибка повторите через минуту")
-                    }
-
-                    Status.LOADING -> {}
-                }
-            }
-    }
-
-    fun addUpload() {
-        binding.etRoom.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etRoom.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etRoom.setTextColor(defaultColor)
-                viewModel.setFloor("Bearer $token", binding.etRoom.text.toString())
-                    .observe(requireActivity()) {
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                Log.i("xscd", "upload:${it.data}")
-                            }
-
-                            Status.ERROR -> {
-                                showToast(
-                                    requireContext(),
-                                    "Произошла ошибка повторите через минуту"
-                                )
-                            }
-
-                            Status.LOADING -> {}
-                        }
-                    }
-            } else {
-                binding.etRoom.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etRoom.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
-        }
-        binding.etVer.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etVer.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etVer.setTextColor(defaultColor)
-            } else {
-                binding.etVer.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etVer.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
-        }
-        binding.etEr.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etEr.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etEr.setTextColor(defaultColor)
-                viewModel.addCyrency(
-                    "Bearer $token",
-                    binding.etEr.text.toString(),
-                    binding.etVer.text.toString()
-                ).observe(requireActivity()) {
+        if (token.isEmpty() && part.toString().isEmpty() && binding.etId.text.toString().isEmpty()){
+            showToast(requireContext(),"Заполните все поля")
+        } else {
+            viewModel.setImage("Bearer $token", part, binding.etId.text.toString().toInt())
+                .observe(requireActivity()) {
                     when (it.status) {
                         Status.SUCCESS -> {
                             Log.i("xscd", "upload:${it.data}")
+                            showToast(requireContext(), "Данные отправлены!!")
                         }
 
                         Status.ERROR -> {
-                            showToast(
-                                requireContext(),
-                                "Произошла ошибка повторите через минуту"
-                            )
+                            showToast(requireContext(), "Произошла ошибка повторите через минуту")
                         }
 
                         Status.LOADING -> {}
                     }
                 }
-
-            } else {
-                binding.etEr.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etEr.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
-        }
-        binding.etDvX.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etDvX.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etDvX.setTextColor(defaultColor)
-                viewModel.addDocument("Bearer $token", binding.etDvX.text.toString())
-                    .observe(requireActivity()) {
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                Log.i("xscd", "upload:${it.data}")
-                            }
-
-                            Status.ERROR -> {
-                                showToast(
-                                    requireContext(),
-                                    "Произошла ошибка повторите через минуту"
-                                )
-                            }
-
-                            Status.LOADING -> {}
-                        }
-                    }
-            } else {
-                binding.etDvX.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etDvX.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
-        }
-
-        binding.etDil.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etDil.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etDil.setTextColor(defaultColor)
-                viewModel.addType("Bearer $token", binding.etDil.text.toString())
-                    .observe(requireActivity()) {
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                Log.i("xscd", "upload:${it.data}")
-                            }
-
-                            Status.ERROR -> {
-                                showToast(
-                                    requireContext(),
-                                    "Произошла ошибка повторите через минуту"
-                                )
-                            }
-
-                            Status.LOADING -> {}
-                        }
-                    }
-            } else {
-                binding.etDil.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etDil.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
-        }
-
-        binding.etDvZxx.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etDvZxx.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etDvZxx.setTextColor(defaultColor)
-                viewModel.addSeries("Bearer $token", binding.etDvX.text.toString())
-                    .observe(requireActivity()) {
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                Log.i("xscd", "upload:${it.data}")
-                            }
-
-                            Status.ERROR -> {
-                                showToast(
-                                    requireContext(),
-                                    "Произошла ошибка повторите через минуту"
-                                )
-                            }
-
-                            Status.LOADING -> {}
-                        }
-                    }
-            } else {
-                binding.etDvZxx.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etDvZxx.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
-        }
-
-        binding.etDav.setOnLongClickListener {
-            isButtonClicked = !isButtonClicked
-            if (isButtonClicked) {
-                binding.etDav.setBackgroundResource(R.drawable.bg_lyue)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.card)
-                binding.etDav.setTextColor(defaultColor)
-                viewModel.addRegion("Bearer $token", binding.etDvX.text.toString())
-                    .observe(requireActivity()) {
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                Log.i("xscd", "upload:${it.data}")
-                            }
-
-                            Status.ERROR -> {
-                                showToast(
-                                    requireContext(),
-                                    "Произошла ошибка повторите через минуту"
-                                )
-                            }
-
-                            Status.LOADING -> {}
-                        }
-                    }
-            } else {
-                binding.etDav.setBackgroundResource(R.drawable.bg_black_tv_line)
-                val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-                binding.etDav.setTextColor(defaultColor)
-            }
-            return@setOnLongClickListener true
         }
     }
 
     fun add() {
-
+        Log.i("ijuhy", "add:${binding.etL.isChecked}")
         apartmentCreate = ApartmentCreate(
             title = binding.etText.text.toString(),
             square = binding.etKm.text.toString(),
             communications = binding.etDf.text.toString(),
             description = binding.editIn.text.toString(),
             address = binding.etLocation.text.toString(),
-            best = true,
+            best = binding.etL.isChecked,
             price = binding.etSan.text.toString(),
             room_count = binding.etRoom.text.toString(),
             lat = binding.etPhone.text.toString(),
@@ -359,22 +161,26 @@ class AddFragment : Fragment() {
             series = binding.etDvZxx.text.toString().toInt(),
             region = binding.etDav.text.toString().toInt()
         )
+        if (token.isEmpty() && binding.etDvX.text.toString().isEmpty() && binding.etDil.text.toString().isEmpty()  && binding.etRoom.text.toString().isEmpty() && binding.etDvZxx.text.toString().isEmpty() && binding.etDav.text.toString().isEmpty() && binding.etEr.text.toString().isEmpty() && binding.etText.text.toString().isEmpty() && binding.etKm.text.toString().isEmpty() && binding.etDf.text.toString().isEmpty() && binding.editIn.text.toString().isEmpty() && binding.etLocation.text.toString().isEmpty() && binding.etL.isChecked.toString().isEmpty() && binding.etSan.text.toString().isEmpty() && binding.etRoom.text.toString().isEmpty() && binding.etPhone.text.toString().isEmpty()){
+            showToast(requireContext(),"Заполните все поля!!")
+        } else {
+            viewModel.addApartment("Bearer $token", apartmentCreate)
+                .observe(requireActivity()) {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            Log.i("axsdcfv", "add:$token")
+                            Log.i("hbj", "onViewModel:$it")
+                            showToast(requireContext(), "Данные отправлены!!")
+                        }
 
-        viewModel.addApartment("Bearer $token", apartmentCreate)
-            .observe(requireActivity()) {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        Log.i("axsdcfv", "add:$token")
-                        Log.i("hbj", "onViewModel:$it")
+                        Status.ERROR -> {
+                            Log.i("olp", "onViewModel:${it.message}")
+                        }
+
+                        Status.LOADING -> viewModel.loading.postValue(true)
                     }
-
-                    Status.ERROR -> {
-                        Log.i("olp", "onViewModel:${it.message}")
-                    }
-
-                    Status.LOADING -> viewModel.loading.postValue(true)
                 }
-            }
+        }
     }
 
 
@@ -476,25 +282,31 @@ class AddFragment : Fragment() {
 
     private fun onClick(title: String) {
         binding.etRoom.setText(title)
+        binding.rvRoom.isVisible = false
     }
 
     private fun onClickD(title: String) {
         binding.etDvX.setText(title)
+        binding.rvDocum.isVisible = false
     }
 
     private fun onClickF(title: String) {
         binding.etDav.setText(title)
+        binding.rvRegifn.isVisible = false
     }
 
     private fun onClickT(title: String) {
         binding.etDil.setText(title)
+        binding.rvType.isVisible = false
     }
 
     private fun onClickS(title: String) {
         binding.etDvZxx.setText(title)
+        binding.rvSeries.isVisible = false
     }
 
     private fun onClickCy(title: String) {
         binding.etEr.setText(title)
+        binding.rvValute.isVisible = false
     }
 }

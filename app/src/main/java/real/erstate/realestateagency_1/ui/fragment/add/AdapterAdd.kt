@@ -18,9 +18,9 @@ class AdapterAdd(private val resource: Resource<DataReonse>, private val onClick
 
     inner class ViewHolder(private val binding: ItemAddBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(task: Region) {
-           binding.tv.text = task.name
+            binding.tv.text = task.name
             binding.tvId.text = task.id.toString()
-            itemView.setOnClickListener {
+            binding.tv.setOnClickListener {
                 onClick(binding.tvId.text.toString())
             }
         }

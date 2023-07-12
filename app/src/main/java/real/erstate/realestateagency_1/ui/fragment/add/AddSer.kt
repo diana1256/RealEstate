@@ -14,12 +14,11 @@ import real.erstate.realestateagency_1.data.model.Result
 class AddSer(private val resource: Resource<DataResponse>, private val onClick: (String) -> Unit) :
     ListAdapter<Image, AddSer.ViewHolder>(DiffCallback()) {
 
-
     inner class ViewHolder(private val binding: ItemAddBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(task: Result) {
             binding.tv.text = task.title
             binding.tvId.text = task.id.toString()
-            itemView.setOnClickListener {
+            binding.tv.setOnClickListener {
                 onClick(binding.tvId.text.toString())
             }
         }

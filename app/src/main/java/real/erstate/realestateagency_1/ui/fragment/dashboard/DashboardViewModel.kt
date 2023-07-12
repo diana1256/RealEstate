@@ -16,8 +16,8 @@ class DashboardViewModel (private val repository: Repository) : ViewModel() {
         return repository.searFilter(title)
     }
 
-    fun getApartmentType(): LiveData<Resource<ApartmentTypeResponse>> {
-        return repository.getApartmentType()
+    fun search(region:String,room:String): LiveData<Resource<ApartmentListResponse>>{
+        return repository.searchSer( region, room)
     }
 
     fun getApartment(): LiveData<Resource<ApartmentListResponse>> {

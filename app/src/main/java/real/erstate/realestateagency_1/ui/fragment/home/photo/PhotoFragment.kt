@@ -31,8 +31,8 @@ class PhotoFragment : Fragment() {
 
     private lateinit var binding : FragmentPhotoBinding
 
+    var img = ""
     private val args by navArgs<PhotoFragmentArgs>()
-
 
     private val viewModel : PhotoViewModel by viewModel()
     @SuppressLint("SourceLockedOrientationActivity")
@@ -47,9 +47,34 @@ class PhotoFragment : Fragment() {
         return binding.root
     }
 
+    private fun onViewModel(){
+        viewModel.loading.observe(requireActivity()){
+            binding.progresBar.isVisible = it
+        }
+        viewModel.getImage(args.qwe.id).observe(requireActivity()) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    viewModel.loading.postValue(false)
+                    Log.i("zasxd", "onViewModel:${args.qwe}")
+                    val adapterViewPager = AdapterViewPager(requireActivity(),args.qwe)
+                    binding.vpv.adapter = adapterViewPager
+                    binding.dotsIndicator.attachTo(binding.vpv)
+                    val wer = args.qwe.apartment_images
+                    val  er = wer[0]
+                    img = er.image
+                }
+                Status.ERROR -> {
+                    viewModel.loading.postValue(true)
+                    Log.i("olerrt", "initViewModel:${it.message}")
+                }
+                Status.LOADING -> viewModel.loading.postValue(true)
+            }
+        }
+    }
+
     private fun initView() {
         binding.ivBlack.setOnClickListener{
-            findNavController().navigate(R.id.realEstateFragment)
+            findNavController().navigateUp()
         }
 
         binding.alertTv.setOnClickListener {
@@ -67,35 +92,11 @@ class PhotoFragment : Fragment() {
             }
             val v = view.findViewById<CardView>(R.id.card_iv)
             v.setOnClickListener {
-                shepe("https://vm4506017.43ssd.had.wf/media/get.jpeg")
+                shepe(img)
             }
         }
     }
 
-    private fun onViewModel(){
-        viewModel.loading.observe(requireActivity()){
-            binding.progresBar.isVisible = it
-        }
-        viewModel.getImage(args.qwe.id.toString()).observe(requireActivity()) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    viewModel.loading.postValue(false)
-                    val adapterViewPager = it.data?.apartment_images?.let { it1 ->
-                        AdapterViewPager(requireActivity(),
-                            it1
-                        )
-                    }
-                    binding.vpv.adapter = adapterViewPager
-                    binding.dotsIndicator.attachTo(binding.vpv)
-                }
-                Status.ERROR -> {
-                    viewModel.loading.postValue(true)
-                    Log.i("olerrt", "initViewModel:${it.message}")
-                }
-                Status.LOADING -> viewModel.loading.postValue(true)
-            }
-        }
-    }
     fun shepe(link:String){
         val sengerind = Intent(Intent.ACTION_SEND)
         sengerind.type = "text/planin"

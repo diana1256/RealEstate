@@ -6,19 +6,21 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import real.erstate.realestateagency_1.data.local.result.Resource
+import real.erstate.realestateagency_1.data.model.Apartment
 import real.erstate.realestateagency_1.data.model.ApartmentImage
 
 class AdapterViewPager(
     fragment: FragmentActivity,
-    private val listImage: List<ApartmentImage>
+    private val listImage: Apartment
 ) : FragmentStateAdapter(fragment) {
 
     private var onItemClickListener: OnItemClickListener? = null
 
-    override fun getItemCount(): Int = listImage.size
+    override fun getItemCount(): Int = listImage.apartment_images.size
 
     fun getTask(pos: Int): ApartmentImage {
-        return listImage[pos]
+        return listImage.apartment_images[pos]
     }
 
     override fun createFragment(position: Int): Fragment {

@@ -24,6 +24,7 @@ class NotificationsFragment : Fragment() {
 
     private lateinit var binding: FragmentNotificationsBinding
     private lateinit var favDB: FavDB
+    private lateinit var fav : Favorite
     private val viewModel : NotificationsViewModel by viewModel()
     private lateinit var adapterFav: AdapterFav
     private var favItemList: MutableList<Favorite> = mutableListOf()
@@ -54,8 +55,8 @@ class NotificationsFragment : Fragment() {
             )
         }
         val adapterLoad = AdapterTwoLoad()
+        binding.load.rv.adapter = adapterLoad
         adapterLoad.submitList(listLoad)
-        initView()
         onViewModel()
         return binding.root
     }
@@ -82,12 +83,10 @@ class NotificationsFragment : Fragment() {
                 Status.LOADING -> viewModel.loading.postValue(true)
             }
         }
+
     }
-    private fun initView() {
-        binding.item.btnAdd.setOnClickListener {
-            findNavController().navigate(R.id.navigation_home)
-        }
-    }
+
+
     @SuppressLint("Range")
     private fun loadData() {
         favItemList.clear()
@@ -103,8 +102,10 @@ class NotificationsFragment : Fragment() {
                 val san = cursor.getString(cursor.getColumnIndex(FavDB.SAN))
                 val local = cursor.getString(cursor.getColumnIndex(FavDB.LOCAL))
                 val km = cursor.getString(cursor.getColumnIndex(FavDB.KM))
+                val status = cursor.getString(cursor.getColumnIndex(FavDB.PRICE))
                 val favItem = Favorite(
                     id,
+                    status,
                     image,
                     dil,
                     title,
@@ -113,14 +114,22 @@ class NotificationsFragment : Fragment() {
                     room,
                     local
                 )
+                fav = favItem
                 favItemList.add(favItem)
             }
         } finally {
             cursor.close()
             db?.close()
         }
-        adapterFav = AdapterFav(requireActivity(), favItemList)
+        adapterFav = AdapterFav(requireActivity(), favItemList,this::onClick)
         binding.item.rvH.adapter = adapterFav
+            binding.item.tvText.isVisible = adapterFav.itemCount <= 0
+    }
+
+    private fun onClick(fav:Favorite,id: String){
+        val awer = Favorite(fav.id,id,fav.image,fav.tvDil,fav.tvTitle,fav.tvSan,fav.tvKm,fav.tvRoom,fav.tvLocation)
+     val tyu = NotificationsFragmentDirections.actionNavigationNotificationsToRealFavFragment3(awer)
+        findNavController().navigate(tyu)
     }
 
     private val simpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

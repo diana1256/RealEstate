@@ -153,147 +153,160 @@
                         android:background="#F4F6FB"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                     <LinearLayout
-                        android:id="@+id/ll_one"
+                        android:id="@+id/qwe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_bly_tv_line"
-                        android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/line_two">
 
-                        <TextView
-                            android:id="@+id/tv_san"
+                        <LinearLayout
+                            android:id="@+id/ll_one"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginBottom="6dp"
-                            android:textColor="#1C3A75"
-                            android:textSize="14sp" />
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_bly_tv_line"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/line_two">
 
-                        <ImageView
-                            android:id="@+id/iv_gone"
+                            <TextView
+                                android:id="@+id/tv_san"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="6dp"
+                                android:textColor="#1C3A75"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="6.5dp"
+                                android:layout_marginEnd="12dp"
+                                android:layout_marginBottom="6.5dp"
+                                android:src="@drawable/close"
+                                android:contentDescription="@string/todo"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/tyu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="6.5dp"
-                            android:layout_marginEnd="12dp"
-                            android:layout_marginBottom="6.5dp"
-                            android:src="@drawable/close"
-                            android:contentDescription="@string/todo"/>
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_bly_tv_line"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toEndOf="@id/ll_one"
+                            app:layout_constraintTop_toBottomOf="@id/line_two">
+
+                            <TextView
+                                android:id="@+id/adres"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="6dp"
+                                android:textColor="#1C3A75"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/ref"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="6.5dp"
+                                android:layout_marginEnd="12dp"
+                                android:contentDescription="@string/todo"
+                                android:layout_marginBottom="6.5dp"
+                                android:src="@drawable/close" />
+                        </LinearLayout>
                     </LinearLayout>
-
                     <LinearLayout
-                        android:id="@+id/tyu"
+                        android:id="@+id/werfd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_bly_tv_line"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toEndOf="@id/ll_one"
-                        app:layout_constraintTop_toBottomOf="@id/line_two">
-
-                        <TextView
-                            android:id="@+id/adres"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginBottom="6dp"
-                            android:textColor="#1C3A75"
-                            android:textSize="14sp" />
-
-                        <ImageView
-                            android:id="@+id/ref"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="6.5dp"
-                            android:layout_marginEnd="12dp"
-                            android:contentDescription="@string/todo"
-                            android:layout_marginBottom="6.5dp"
-                            android:src="@drawable/close" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_three"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_bly_tv_line"
-                        android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ll_one">
-
-                        <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="10dp"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="10.5dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:src="@drawable/room_blyy"
-                            android:contentDescription="@string/todo"/>
-
-                        <TextView
-                            android:id="@+id/count"
+                        app:layout_constraintTop_toBottomOf="@id/qwe">
+                        <LinearLayout
+                            android:id="@+id/ll_three"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginBottom="6dp"
-                            android:textColor="#1C3A75"
-                            android:textSize="14sp" />
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_bly_tv_line"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tyu">
 
-                        <ImageView
-                            android:id="@+id/iv_gane_iv"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="7.5dp"
-                            android:layout_marginEnd="12dp"
-                            android:layout_marginBottom="6.5dp"
-                            android:src="@drawable/close"
-                            android:contentDescription="@string/todo"/>
-                    </LinearLayout>
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="14dp"
+                                android:layout_marginTop="10.5dp"
+                                android:layout_marginBottom="9.5dp"
+                                android:src="@drawable/room_blyy"
+                                android:contentDescription="@string/todo"/>
 
-                    <LinearLayout
-                        android:id="@+id/yuo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_bly_tv_line"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toEndOf="@id/ll_three"
-                        app:layout_constraintTop_toBottomOf="@id/ll_one">
+                            <TextView
+                                android:id="@+id/count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="6dp"
+                                android:textColor="#1C3A75"
+                                android:textSize="14sp" />
 
+                            <ImageView
+                                android:id="@+id/iv_gane_iv"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginTop="7.5dp"
+                                android:layout_marginEnd="12dp"
+                                android:layout_marginBottom="6.5dp"
+                                android:src="@drawable/close"
+                                android:contentDescription="@string/todo"/>
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/square"
+                        <LinearLayout
+                            android:id="@+id/yuo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginBottom="6dp"
-                            android:textColor="#1C3A75"
-                            android:textSize="14sp" />
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_bly_tv_line"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toEndOf="@id/ll_three"
+                            app:layout_constraintTop_toBottomOf="@id/ll_one">
 
-                        <ImageView
-                            android:id="@+id/iv_olp"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="6.5dp"
-                            android:layout_marginEnd="12dp"
-                            android:layout_marginBottom="6.5dp"
-                            android:src="@drawable/close"
-                            android:contentDescription="@string/todo"/>
+
+                            <TextView
+                                android:id="@+id/square"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="6dp"
+                                android:textColor="#1C3A75"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_olp"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="6.5dp"
+                                android:layout_marginEnd="12dp"
+                                android:layout_marginBottom="6.5dp"
+                                android:src="@drawable/close"
+                                android:contentDescription="@string/todo"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View
@@ -302,7 +315,7 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="13dp"
                         android:background="#F4F6FB"
-                        app:layout_constraintTop_toBottomOf="@id/ll_three" />
+                        app:layout_constraintTop_toBottomOf="@id/werfd" />
 
                     <TextView
                         android:id="@+id/tv_number"
@@ -310,10 +323,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="@string/_32"
                         android:textColor="#6C7180"
                         android:textSize="12sp"
-                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/line_thee" />
 
@@ -344,6 +355,17 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintTop_toTopOf="parent"
                     app:spanCount="2"
+                    tools:listitem="@layout/item_task_two" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_qwerk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spanCount="2"
+                    android:visibility="gone"
                     tools:listitem="@layout/item_task_two" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

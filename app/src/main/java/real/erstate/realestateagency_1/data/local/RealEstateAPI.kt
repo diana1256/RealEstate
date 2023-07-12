@@ -21,6 +21,18 @@ interface RealEstateAPI {
              @Query("room_count") room:String
          ):Response<ApartmentListResponse>
 
+    @GET("apartment/")
+    suspend fun searchSer(
+        @Query("region")region: String,
+        @Query("room_count") room:String
+    ):Response<ApartmentListResponse>
+
+    @GET("apartment/")
+    suspend fun searchFil(
+        @Query("region")region: String,
+        @Query("room_count") room:String
+    ):Response<ApartmentListResponse>
+
         @GET("apartment/")
         suspend fun setApartments(
         ): Response<ApartmentListResponse>
@@ -78,10 +90,10 @@ interface RealEstateAPI {
             @Query("login") query: String
         ): Response<UserResponse>
 
-        @POST("users/")
+        @POST("users/?search=")
        suspend fun createUser(
             @Body user: addUser
-        ): Response<addUser>
+        ): Response<UserResponse>
 
        @POST("ads/")
        suspend fun addAds(

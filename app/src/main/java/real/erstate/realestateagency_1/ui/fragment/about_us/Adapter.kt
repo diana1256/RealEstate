@@ -37,8 +37,7 @@ class Adapter(private val rewList: Resource<RewList>) : ListAdapter<RewSour,
         fun onBind(note: RewSour) {
             binding.desc.text = note.review_text
             binding.tvName.text = note.fullname
-            binding.ivSr.text = note.stars.toString()
-            binding.ivStar.setImageResource(R.drawable.baseline_star_rate_24)
+            binding.ivStar.numStars = note.stars
         }
     }
 

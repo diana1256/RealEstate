@@ -15,7 +15,7 @@ import real.erstate.realestateagency_1.databinding.FragmentLoginBinding
 import real.erstate.realestateagency_1.ui.fragment.registration.OnRegistrationListener
 import real.erstate.realestateagency_1.ui.util.showToast
 import real.erstate.realestateagency_1.data.local.result.Status
-import real.estate.realestateagency1.ui.util.Pref
+import real.erstate.realestateagency_1.ui.util.Pref
 
 class LoginFragment : Fragment() {
 

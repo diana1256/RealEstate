@@ -18,7 +18,7 @@ class AddCyrrency(private val resource: Resource<DataResponseList>, private val 
         fun onBind(task: Currency) {
             binding.tv.text = task.symbol
             binding.tvId.text = task.id.toString()
-            itemView.setOnClickListener {
+            binding.tv.setOnClickListener {
                 onClick(binding.tvId.text.toString())
             }
         }
