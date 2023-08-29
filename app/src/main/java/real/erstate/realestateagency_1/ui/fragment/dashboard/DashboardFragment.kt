@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,6 +20,7 @@ import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.data.entity.LoadRel
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.Apartment
+import real.erstate.realestateagency_1.data.model.Favorite
 import real.erstate.realestateagency_1.databinding.FragmentDashboardBinding
 import real.erstate.realestateagency_1.ui.fragment.home.AdapterRealEstate
 import real.erstate.realestateagency_1.ui.fragment.home.AdapterTwoLoad
@@ -29,8 +32,8 @@ class DashboardFragment : Fragment() {
     private val listLoad: ArrayList<LoadRel> = arrayListOf()
     private val viewModel : DashboardViewModel by viewModel()
     private var id = ""
-    private lateinit var adapterRealEstate : AdapterRealEstate
-    private lateinit var adaptefil : AdapterRealEstate
+    private var login = ""
+    private var apartme = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,10 +42,9 @@ class DashboardFragment : Fragment() {
     ): View {
         binding = FragmentDashboardBinding.inflate(inflater,container,false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        binding.shimmer.startShimmer()
         listLoad.add(
             LoadRel(
-                image = R.drawable.screensaver,
+                image = 0,
                 tvDil = "",
                 tvTitle = "",
                 tvSan = "",
@@ -54,7 +56,7 @@ class DashboardFragment : Fragment() {
         )
         listLoad.add(
             LoadRel(
-                image = R.drawable.screensaver,
+                image = 0,
                 tvDil = "",
                 tvTitle = "",
                 tvSan = "",
@@ -66,7 +68,7 @@ class DashboardFragment : Fragment() {
         )
         listLoad.add(
             LoadRel(
-                image = R.drawable.screensaver,
+                image = 0,
                 tvDil = "",
                 tvTitle = "",
                 tvSan = "",
@@ -78,7 +80,7 @@ class DashboardFragment : Fragment() {
         )
         listLoad.add(
             LoadRel(
-                image = R.drawable.screensaver,
+                image = 0,
                 tvDil = "",
                 tvTitle = "",
                 tvSan = "",
@@ -111,12 +113,28 @@ class DashboardFragment : Fragment() {
         binding.itemD.fsds.text = Pref(requireContext()).isRoomCount()
         id = Pref(requireContext()).isAdressId()
     }
-    private fun onClick(apartment: Apartment,id:Int,wer:String){
-        val wer = Apartment(id = wer,apartment.title,apartment.square,apartment.address,apartment.communications,apartment.description,apartment.best,apartment.price,apartment.room_count,apartment.lat,apartment.lng,apartment.currency,apartment.created_at,apartment.type,apartment.floor,apartment.document,apartment.series,apartment.region,apartment.apartment_images,apartment.author)
-        val  sd = DashboardFragmentDirections.actionNavigationDashboardToRealSearchFragment2(wer)
-        findNavController().navigate(sd)
+    private fun onClick(id:String){
+        apartme = id
+        val op = real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model(img = id)
+        findNavController().navigate(R.id.realSearchFragment2, bundleOf(ARAR_ID to op))
+    }
+
+    private fun onLong(wer:String) {
+        Toast.makeText(requireContext(), "Id apartment: $wer", Toast.LENGTH_SHORT).show()
     }
     private fun prover(){
+        viewModel.searchUser(Pref(requireContext()).isLogin()).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS ->{
+                    login = it.data?.results?.get(0)?.id.toString()
+                }
+                Status.LOADING->{
+                    Log.i("scdvfbg", "olp:$it")
+                }
+                Status.ERROR -> Log.i("swdef", "olp:$it")
+            }
+        }
+
         Log.i("sdef[;orgqq", "prover:${ binding.itemD.dfg.text},${binding.itemD.ff.text},${binding.itemD.fhh.text},${binding.itemD.sdrt.text},${binding.itemD.fsds.text},${binding.itemD.tvb.text}")
         if (binding.itemD.dfg.text.isNullOrEmpty() || binding.itemD.dfg.text.equals("$- $")){
             binding.itemD.df.isVisible = false
@@ -150,9 +168,9 @@ class DashboardFragment : Fragment() {
         }else{
             binding.itemD.llVv.isVisible = false
             serarchFil()
-           binding.itemD.ruj.setOnClickListener {
-               binding.itemD.llFife.isVisible = false
-           }
+            binding.itemD.ruj.setOnClickListener {
+                binding.itemD.llFife.isVisible = false
+            }
         }
         if (binding.itemD.fsds.text.isNullOrEmpty() ||  binding.itemD.fsds.text.equals("$- $")){
             binding.itemD.llFos.isVisible = false
@@ -214,7 +232,10 @@ class DashboardFragment : Fragment() {
                 when (it.status) {
                     Status.SUCCESS -> {
                         viewModel.loading.postValue(false)
-                        binding.itemD.rvRecom.adapter = AdapterRealEstate(act,it, "1",this::onClick)
+                        val adapterRealEstate =  AdapterRealEstate(this::onClick,this::fav,this::onLong)
+                        binding.itemD.rvRecom.adapter = adapterRealEstate
+                        adapterRealEstate.submitList(it.data?.results)
+                        binding.con.isVisible = true
                     }
                     Status.ERROR -> {
                         viewModel.loading.postValue(true)
@@ -293,10 +314,33 @@ class DashboardFragment : Fragment() {
                 return false
             }
 
-           private fun onClick(apartment: Apartment,id: Int,er:String){
-               val wer = Apartment(id = er,apartment.title,apartment.square,apartment.address,apartment.communications,apartment.description,apartment.best,apartment.price,apartment.room_count,apartment.lat,apartment.lng,apartment.currency,apartment.created_at,apartment.type,apartment.floor,apartment.document,apartment.series,apartment.region,apartment.apartment_images,apartment.author)
-               val  sd = DashboardFragmentDirections.actionNavigationDashboardToRealSearchFragment2(wer)
-               findNavController().navigate(sd)
+            private fun onClick(id:String){
+                apartme = id
+                val op = real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model(img = id)
+                findNavController().navigate(R.id.realSearchFragment2, bundleOf(ARAR_ID to op))
+            }
+            fun id(qwe:String){
+                apartme = qwe
+            }
+
+            private fun onLong(wer:String) {
+                Toast.makeText(requireContext(), "Id apartment: $wer", Toast.LENGTH_SHORT).show()
+            }
+
+            private fun fav(wer:Boolean,id: String){
+                Log.i("sqwef", "fav:$wer")
+                val fav = Favorite(user = login, apartment = id)
+                Log.i("asdfr", "fav: $fav")
+                Log.i("klder", "fav:$apartme")
+                viewModel.setFavorite("Bearer ${Pref(requireContext()).isToken()}",fav).observe(requireActivity()){
+                    when(it.status){
+                        Status.SUCCESS -> {
+                            Log.i("orinjge", "fav:$it")
+                        }
+                        Status.LOADING ->{}
+                        Status.ERROR -> {}
+                    }
+                }
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 img = newText
@@ -312,10 +356,10 @@ class DashboardFragment : Fragment() {
                                     Log.i("pku", "onViewModel:$data")
                                     binding.itemD.g.isVisible = true
                                     binding.itemD.tvNumber.text = "${data.data?.count} объявления"
-                                    val adapterRealEstate =
-                                        AdapterRealEstate(act, data, "12", this::onClick)
+                                    val adapterRealEstate = AdapterRealEstate(this::onClick,this::fav,this::onLong)
                                     binding.itemD.rvSer.isVisible = true
                                     binding.itemD.rvSer.adapter = adapterRealEstate
+                                    adapterRealEstate.submitList(data.data?.results)
                                     binding.itemD.rvRecom.isVisible = false
                                     binding.itemD.rvFil.isVisible = false
                                     Log.i(
@@ -338,33 +382,60 @@ class DashboardFragment : Fragment() {
     }
 
     private fun serarchFil() {
-            activity?.let { act ->
-                viewModel.search(id, binding.itemD.fsds.text.toString())
-                    .observe(act) { data ->
-                        when (data.status) {
-                            Status.SUCCESS -> {
-                                viewModel.loading.postValue(false)
-                                val adaptefil =
-                                    AdapterRealEstate(act, data, "12", this::onClick)
-                                binding.itemD.rvRecom.isVisible = false
-                                binding.itemD.llVv.isVisible = false
-                                binding.itemD.tvRecom.isVisible = false
-                                binding.itemD.rvFil.adapter = adaptefil
-                                binding.itemD.rvSer.isVisible = false
-                                binding.itemD.rvFil.isVisible = true
-                                binding.itemD.tvNumber.text = "${data.data?.count} объявления"
-                                binding.itemD.g.isVisible = true
-                                Log.i("idrrtt", "search:${data.data}")
-                            }
-                            Status.ERROR -> {
-                                Log.i("olp", "onViewModel:${data.message} ")
-                            }
+        viewModel.loading.postValue(true)
+        activity?.let { act ->
+            viewModel.search(id, binding.itemD.fsds.text.toString())
+                .observe(act) { data ->
+                    when (data.status) {
+                        Status.SUCCESS -> {
+                            viewModel.loading.postValue(false)
+                            val adaptefil =
+                                AdapterRealEstate(this::onClick,this::fav,this::onLong)
+                            adaptefil.submitList(data.data?.results)
+                            binding.itemD.rvRecom.isVisible = false
+                            binding.itemD.llVv.isVisible = false
+                            binding.itemD.tvRecom.isVisible = false
+                            binding.itemD.rvFil.adapter = adaptefil
+                            binding.itemD.rvSer.isVisible = false
+                            binding.itemD.rvFil.isVisible = true
+                            binding.con.isVisible = true
+                            binding.itemD.tvNumber.text = "${data.data?.count} объявления"
+                            binding.itemD.g.isVisible = true
+                            Log.i("idrrtt", "search:${data.data}")
+                        }
+                        Status.ERROR -> {
+                            Log.i("olp", "onViewModel:${data.message} ")
+                        }
 
-                            Status.LOADING -> {
-                                viewModel.loading.postValue(true)
-                            }
+                        Status.LOADING -> {
+                            viewModel.loading.postValue(true)
                         }
                     }
+                }
+        }
+    }
+
+    companion object{
+        const val ARAR_ID = "fbnop"
+    }
+
+    fun id(qwe:String){
+        apartme = qwe
+    }
+
+    private fun fav(wer:Boolean,id: String){
+        Log.i("sqwef", "fav:$wer")
+        val fav = Favorite(user = login, apartment = id)
+        Log.i("asdfr", "fav: $fav")
+        Log.i("klder", "fav:$apartme")
+        viewModel.setFavorite("Bearer ${Pref(requireContext()).isToken()}",fav).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS -> {
+                    Log.i("orinjge", "fav:$it")
+                }
+                Status.LOADING ->{}
+                Status.ERROR -> {}
             }
         }
+    }
 }

@@ -52,17 +52,17 @@ class MainActivity : AppCompatActivity() , OnRegistrationListener {
 
         }
 
-        if (Pref(applicationContext).isProfile() == "admin"){
+        if (Pref(applicationContext).isProfile()){
             onRegistrationStatusChanged(Pref(applicationContext).isProfile())
-            binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = true
+            binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = Pref(applicationContext).isProfile()
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
-    override fun onRegistrationStatusChanged(isAdmin: String) {
+    override fun onRegistrationStatusChanged(isAdmin: Boolean) {
         Pref(applicationContext).setProfileUser(isAdmin)
-        binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = (Pref(applicationContext).isProfile() == "admin")
+        binding.navView.menu.findItem(R.id.navigation_add)?.isVisible = Pref(applicationContext).isProfile()
     }
 }

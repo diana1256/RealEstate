@@ -5,10 +5,7 @@ import okhttp3.MultipartBody
 import org.koin.dsl.module
 import real.erstate.realestateagency_1.data.local.BaseDataSource
 import real.erstate.realestateagency_1.data.local.RealEstateAPI
-import real.erstate.realestateagency_1.data.model.Ads
-import real.erstate.realestateagency_1.data.model.ApartmentCreate
-import real.erstate.realestateagency_1.data.model.TokenObtainPair
-import real.erstate.realestateagency_1.data.model.addUser
+import real.erstate.realestateagency_1.data.model.*
 
 val remoteDataSourceModule = module {
     factory { RemoteDataSource(get()) }
@@ -22,6 +19,9 @@ class RemoteDataSource (private val realEstateAPI: RealEstateAPI):
         realEstateAPI.getApartments(title)
     }
 
+    suspend fun delete(token: String,id: String) = getResult {
+        realEstateAPI.deleteFav(token,id)
+    }
     suspend fun getRew() = getResult {
         realEstateAPI.getRew()
     }
@@ -69,8 +69,12 @@ class RemoteDataSource (private val realEstateAPI: RealEstateAPI):
         realEstateAPI.addAds(data)
     }
 
-    suspend fun addBanner() = getResult {
-        realEstateAPI.getBanner()
+    suspend fun getFavorite(token: String) = getResult {
+        realEstateAPI.getFavorite(token)
+    }
+
+    suspend fun getIdApartment(id: String) = getResult {
+        realEstateAPI.getIdApartment(id)
     }
 
     suspend fun getType() = getResult {
@@ -112,6 +116,10 @@ class RemoteDataSource (private val realEstateAPI: RealEstateAPI):
     suspend fun addType(token: String,name: String) = getResult {
         realEstateAPI.addType(token, name)
     }
+
+    suspend fun setFavorite(token: String,moser:Favorite) = getResult {
+        realEstateAPI.setFavorite(token,moser)
+    }
     suspend fun setImage(id:String) = getResult {
         realEstateAPI.setApartme(id)
     }
@@ -126,5 +134,13 @@ class RemoteDataSource (private val realEstateAPI: RealEstateAPI):
 
     suspend fun searchFil(region: String,room:String) = getResult {
         realEstateAPI.searchFil(region,room)
+    }
+
+    suspend fun createAdmin(id: String,admin: admin) = getResult {
+        realEstateAPI.createAdmin(id,admin)
+    }
+
+    suspend fun deleteApartment(token: String,id: Int) = getResult {
+        realEstateAPI.deleteApartment(token,id)
     }
 }

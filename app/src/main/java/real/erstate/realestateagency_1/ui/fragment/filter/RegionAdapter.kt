@@ -20,7 +20,7 @@ class RegionAdapter(private val resource: Resource<DataReonse>, private val onCl
 
     inner class ViewHolder(private val binding: ItemTvFilterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(task: Region) {
-             binding.tvThree.text = task.name
+            binding.tvThree.text = task.name
             binding.tvTh.text = task.id.toString()
             binding.llTvThree.setOnClickListener {
                 isButtonClicked = !isButtonClicked
@@ -49,7 +49,7 @@ class RegionAdapter(private val resource: Resource<DataReonse>, private val onCl
         holder.onBind(resource.data?.results?.get(position)!!)
     }
 
-       override fun getItemCount(): Int = resource.data?.results?.size ?: 0
+    override fun getItemCount(): Int = resource.data?.results?.size ?: 0
 
     private class DiffCallback : DiffUtil.ItemCallback<Image>() {
         override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {

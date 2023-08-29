@@ -30,12 +30,11 @@ class AdapterOneLoad : ListAdapter<LoadRel,
     inner class NoteViewHolder(private val binding: ItemLoadingOneBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(note: LoadRel) {
-            binding.tvTitle.text = note.tvTitle
-            binding.ivPhoto.setImageResource(note.image)
+           /* binding.tvTitle.text = note.tvTitle
             binding.tvGrey.text = note.tvRoom
             binding.tvLp.text = note.tvLocation
             binding.tvLoadObav.text = note.tvSan
-            binding.tvDil.text = note.tvDil
+            binding.tvDil.text = note.tvDil*/
         }
     }
 

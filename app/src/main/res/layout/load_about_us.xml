@@ -25,6 +25,20 @@
 
             </androidx.viewpager2.widget.ViewPager2>
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="408dp"
+                android:layout_height="292dp"
+                android:layout_marginTop="4dp"
+                app:lottie_rawRes="@raw/anim"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </com.airbnb.lottie.LottieAnimationView>
+
             <ProgressBar
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -112,6 +126,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="350dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="10dp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:layout_width="180dp"
                     android:layout_height="25dp"
@@ -123,10 +151,39 @@
                     android:layout_marginEnd="182dp"
                     android:layout_marginTop="52dp" />
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="180dp"
+                    android:layout_height="25dp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="182dp"
+                    android:layout_marginTop="52dp" />
+
+
                 <TextView
                     android:layout_width="163dp"
                     android:layout_height="19dp"
                     android:background="@color/grey_col"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="88dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="205dp"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="163dp"
+                    android:layout_height="19dp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -141,6 +198,20 @@
                     android:layout_marginTop="150dp"
                     android:layout_marginEnd="10dp"
                     android:background="@color/grey_col"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="350dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginEnd="10dp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -170,6 +241,47 @@
                     android:layout_marginEnd="265dp"
                     android:layout_marginStart="5dp"/>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cardCornerRadius="165dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="265dp"
+                    android:layout_marginStart="5dp">
+
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@color/grey_col" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cardCornerRadius="165dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="265dp"
+                    android:layout_marginStart="5dp">
+
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:lottie_rawRes="@raw/anim"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        android:scaleType="centerCrop" />
+
+                </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:layout_width="173dp"
                     android:layout_height="22dp"
@@ -177,6 +289,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:background="@color/grey_col"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="30dp"/>
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="173dp"
+                    android:layout_height="22dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="30dp"/>
@@ -192,15 +319,57 @@
                     android:textSize="19sp"
                     android:layout_marginEnd="30dp"/>
 
-                <TextView
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="130dp"
+                    android:layout_height="19dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="50dp"
+                    android:textSize="19sp"
+                    android:layout_marginEnd="30dp"/>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="53dp"
                     android:layout_height="53dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/ellipse_"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="280dp"/>
+                    app:cardCornerRadius="165dp"
+                    android:layout_marginStart="280dp">
+
+                    <TextView
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="280dp"
+                        android:background="@color/grey_col"/>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="53dp"
+                    android:layout_height="53dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="165dp"
+                    android:layout_marginStart="280dp">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:lottie_rawRes="@raw/anim"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -223,6 +392,21 @@
                     android:layout_marginEnd="200dp"
                     android:layout_marginTop="18dp"/>
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="154dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="23sp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="200dp"
+                    android:layout_marginTop="18dp"/>
+
                 <TextView
                     android:layout_width="350dp"
                     android:layout_height="15dp"
@@ -230,6 +414,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:background="@color/grey_col"
+                    android:layout_marginTop="55dp" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="350dp"
+                    android:layout_height="15dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
                     android:layout_marginTop="55dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

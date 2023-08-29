@@ -48,8 +48,6 @@ class AboutUsFragment : Fragment() {
         listLoad.add(ModelUs("",R.drawable.screensaver,""))
         val  adapterLoad = AdapterLoad()
         binding.con.visibility =View.INVISIBLE
-        binding.shimmer.startShimmer()
-
         adapterLoad.submitList(listLoad)
         binding.load.rvRecyc.adapter = adapterLoad
         inttView()
@@ -67,9 +65,8 @@ class AboutUsFragment : Fragment() {
             openLinkInChrome("https://nedvijimost.kg/")
         }
         binding.item.cardIv.setOnClickListener {
-            val phoneNumber = "996550900700"
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://wa.me/$phoneNumber")
+            intent.data = Uri.parse("https://wa.me/996550900700")
             startActivity(intent)
         }
         binding.item.cardF.setOnClickListener {
@@ -167,7 +164,7 @@ class AboutUsFragment : Fragment() {
 
     @SuppressLint("MissingInflatedId")
     private fun DialogCustom() {
-        binding.item.btn.setOnClickListener {
+        binding.item.vbhqwe.setOnClickListener {
             val view = LayoutInflater.from(requireContext()).inflate(R.layout.diolog_about_us, null)
             val builder = AlertDialog.Builder(requireContext())
             builder.setView(view)
@@ -185,8 +182,6 @@ class AboutUsFragment : Fragment() {
                 dialog.dismiss()
 
             }
-
-
         }
     }
 
@@ -203,7 +198,7 @@ class AboutUsFragment : Fragment() {
         }
     }
 
-    fun onWEr(string: String,stri: String){
+   fun onWEr(string: String,stri: String){
         val data = Ads(string, stri)
         viewModel.addAds(data).observe(requireActivity()){
             when(it.status) {

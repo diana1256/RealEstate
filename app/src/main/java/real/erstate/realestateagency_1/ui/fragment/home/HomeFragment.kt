@@ -8,17 +8,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.data.entity.LoadRel
-import real.erstate.realestateagency_1.databinding.FragmentHomeBinding
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.Apartment
+import real.erstate.realestateagency_1.data.model.Favorite
+import real.erstate.realestateagency_1.data.model.TokenObtainPair
+import real.erstate.realestateagency_1.databinding.FragmentHomeBinding
 import real.erstate.realestateagency_1.ui.fragment.home.view_pager.AdapterViewPager
+import real.erstate.realestateagency_1.ui.fragment.home.view_pager.Model
 import real.erstate.realestateagency_1.ui.util.Pref
+
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -28,7 +34,9 @@ class HomeFragment : Fragment() {
     private lateinit var runnable: Runnable
     private var id = ""
     private val adapterOneLoad = AdapterOneLoad()
-    private var idRv = ""
+    private var login = ""
+    private var apartme = ""
+    private var token = ""
     private val adapterTwoLoad = AdapterTwoLoad()
     private val listOneLoad = ArrayList<LoadRel>()
     private val listTwoLoad = ArrayList<LoadRel>()
@@ -43,11 +51,10 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        binding.shimmer.startShimmer()
         repeat(10) {
             listTwoLoad.add(
                 LoadRel(
-                    image = R.drawable.screensaver,
+                    image = 0,
                     tvRoom = "",
                     tvLocation = "",
                     tvSan = "",
@@ -62,7 +69,7 @@ class HomeFragment : Fragment() {
         repeat(4) {
             listOneLoad.add(
                 LoadRel(
-                    image = R.drawable.screensaver,
+                    image = 0,
                     tvRoom = "",
                     tvLocation = "",
                     tvSan = "",
@@ -86,10 +93,37 @@ class HomeFragment : Fragment() {
     }
 
     private fun olp() {
+         homeViewModel.searchUser(Pref(requireContext()).isLogin()).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS ->{
+                    login = it.data?.results?.get(0)?.id.toString()
+                }
+                Status.LOADING->{
+                    Log.i("scdvfbg", "olp:$it")
+                }
+                Status.ERROR -> Log.i("swdef", "olp:$it")
+            }
+        }
+        val qwe = TokenObtainPair(login= Pref(requireContext()).isLogin(), password = Pref(requireContext()).isPasword())
+        Log.i("aqwert", "olp:$qwe")
+        homeViewModel.token(qwe).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS ->{
+                    Log.i("apple", "olp:$it")
+                    token = it.data?.access.toString()
+                    Pref(requireContext()).setToken(token)
+                }
+                Status.LOADING->{
+                    Log.i("scdvfbg", "olp:$it")
+                }
+                Status.ERROR -> Log.i("swdef", "olp:$it")
+            }
+        }
         if (binding.iem.tvSan.text.isNullOrEmpty() || binding.iem.tvSan.text.equals("$- $")) {
             binding.iem.llOne.isVisible = false
         } else {
             sir()
+           // binding.con.isVisible = true
             binding.iem.ivGone.setOnClickListener {
                 binding.iem.llOne.isVisible = false
             }
@@ -98,6 +132,7 @@ class HomeFragment : Fragment() {
             binding.iem.tyu.isVisible = false
         } else {
             sir()
+          //  binding.con.isVisible = true
             binding.iem.ref.setOnClickListener {
                 binding.iem.tyu.isVisible = false
             }
@@ -106,6 +141,7 @@ class HomeFragment : Fragment() {
             binding.iem.llThree.isVisible = false
         } else {
             sir()
+           // binding.con.isVisible = true
             binding.iem.ivGaneIv.setOnClickListener {
                 binding.iem.llThree.isVisible = false
             }
@@ -114,6 +150,7 @@ class HomeFragment : Fragment() {
             binding.iem.yuo.isVisible = false
         } else {
             sir()
+          //  binding.con.isVisible = true
             binding.iem.ivOlp.setOnClickListener {
                 binding.iem.yuo.isVisible = false
             }
@@ -131,23 +168,28 @@ class HomeFragment : Fragment() {
         binding.iem.tvPv.setOnClickListener {
             findNavController().navigate(R.id.allFragment)
         }
-       binding.iem.filter.setOnClickListener {
+        binding.iem.filter.setOnClickListener {
             findNavController().navigate(R.id.filterFragment)
         }
     }
 
 
-    private fun onClick(apartment: Apartment,id:Int,wer:String) {
-        Log.i("tgyh", "onClick:$idRv")
-        val wer = Apartment(id = wer,apartment.title,apartment.square,apartment.address,apartment.communications,apartment.description,apartment.best,apartment.price,apartment.room_count,apartment.lat,apartment.lng,apartment.currency,apartment.created_at,apartment.type,apartment.floor,apartment.document,apartment.series,apartment.region,apartment.apartment_images,apartment.author)
-        val  sd = HomeFragmentDirections.actionNavigationHomeToRealEstateFragment2(wer)
-        findNavController().navigate(sd)
+    private fun id(id:String){
+        apartme = id
     }
 
-    private fun onClickOne(apartment: Apartment,id: Int,wqe:String) {
-        val wer = Apartment(id = wqe,apartment.title,apartment.square,apartment.address,apartment.communications,apartment.description,apartment.best,apartment.price,apartment.room_count,apartment.lat,apartment.lng,apartment.currency,apartment.created_at,apartment.type,apartment.floor,apartment.document,apartment.series,apartment.region,apartment.apartment_images,apartment.author)
-        val dfg = HomeFragmentDirections.actionNavigationHomeToRealEstateFragment2(wer)
-        findNavController().navigate(dfg)
+    private fun onLong(wer:String) {
+        Toast.makeText(requireContext(), "Id apartment: $wer", Toast.LENGTH_SHORT).show()
+    }
+    private fun onClick(wer:String) {
+        val op = real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model(img = wer)
+        findNavController().navigate(R.id.realEstateFragment, bundleOf(ID_PAR to op))
+    }
+
+    private fun onClickOne(wqe:String) {
+        val op = real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model(img = wqe)
+        findNavController().navigate(R.id.realEstateFragment, bundleOf(ID_PAR to op))
+
     }
     @SuppressLint("SetTextI18n")
     private fun onViewModel() {
@@ -158,21 +200,20 @@ class HomeFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     homeViewModel.loading.postValue(false)
-                     adapterRealEstate = AdapterRealEstate(requireActivity(),it,"1", this::onClick)
+                   val adapter = AdapterRealEstate(this::onClick,this::fav,this::onLong)
+                    Log.i("raqwen", "sir: $apartme")
                     binding.con.isVisible = true
+                    adapter.submitList(it.data?.results)
                     val fgh = it.data?.results?.filter { it.best== true }
                     Log.i("bnm,,", "onViewModel $fgh")
-                    binding.iem.rvTwo.adapter = adapterRealEstate
-
-                    adapterOne = fgh?.let { it1 ->
-                        AdapterOne(requireActivity(),
-                            it1,"1", this::onClickOne)
-                    }!!
+                    binding.iem.rvTwo.adapter =adapter
+                    adapterOne =  AdapterOne(this::onClickOne,this::fav,this::onLong)
                     Log.i("ploo", "onViewModel: $it")
                     binding.iem.rvOne.adapter = adapterOne
+                    Log.i("rpil", "sir: $apartme")
+                    adapterOne.submitList(fgh)
                     Log.i("serty", "onViewModel:${binding.iem.adres.text},$id")
                 }
-
                 Status.ERROR -> {
                     homeViewModel.loading.postValue(true)
                     Log.i("ololo", "initViewModel:${it.message}")
@@ -181,8 +222,8 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
     private fun sir(){
+        homeViewModel.loading.postValue(true)
         activity?.let { act ->
             if (id.isEmpty() || binding.iem.count.text.isEmpty()){
             }else {
@@ -191,13 +232,14 @@ class HomeFragment : Fragment() {
                         when (dataSearch.status) {
                             Status.SUCCESS -> {
                                 homeViewModel.loading.postValue(false)
-                                adapter = AdapterRealEstate(act, dataSearch, "12", this::onClick)
+                                adapter = AdapterRealEstate(this::onClick,this::fav,this::onLong)
+                                Log.i("rain", "sir: $apartme")
+                                adapter.submitList(dataSearch.data?.results)
                                 binding.iem.rvQwerk.isVisible = true
                                 binding.iem.rvTwo.isVisible = false
                                 binding.iem.rvQwerk.adapter = adapter
-                                binding.iem.tvNumber.text =
-                                    "${dataSearch.data?.count.toString()}  обьявления"
-
+                                binding.con.isVisible = true
+                                binding.iem.tvNumber.text = "${dataSearch.data?.count.toString()}  обьявления"
                                 Log.i("idtt", "search:${dataSearch.data}")
                             }
                             Status.ERROR -> {
@@ -309,8 +351,30 @@ class HomeFragment : Fragment() {
         sap.remove("km")
         sap.remove("adre")
         sap.remove("etak")
-         sap.remove("count")
+        sap.remove("count")
         sap.apply()
         olp()
+    }
+
+    companion object{
+        const val ID_PAR = "idPar"
+    }
+
+    private fun fav(wer:Boolean,id:String){
+        Log.i("sqwef", "fav:$wer")
+        val fav = Favorite(user = login, apartment = id)
+        Log.i("asdfr", "fav: $fav")
+        Log.i("lkiop", "fav:$token")
+        Pref(requireContext()).setToken(token)
+        Log.i("klder", "fav:$apartme")
+        homeViewModel.setFavorite("Bearer $token",fav).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS -> {
+                    Log.i("orinjge", "fav:$it")
+                }
+                Status.LOADING ->{}
+                Status.ERROR -> {}
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ class AdapterRei(private val rewList: Resource<RewList>) : ListAdapter<RewSour,
         fun onBind(note: RewSour) {
             binding.desc.text = note.review_text
             binding.tvName.text = note.fullname
-            binding.ivStar.numStars = note.stars
+            binding.ivStar.rating = note.stars.toFloat()
         }
     }
 

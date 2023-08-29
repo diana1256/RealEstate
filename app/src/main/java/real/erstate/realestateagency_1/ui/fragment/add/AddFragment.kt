@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -25,6 +26,7 @@ import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.ApartmentCreate
 import real.erstate.realestateagency_1.data.model.TokenObtainPair
 import real.erstate.realestateagency_1.databinding.FragmentAddBinding
+import real.erstate.realestateagency_1.ui.util.Pref
 import java.io.File
 import java.io.FileOutputStream
 
@@ -48,6 +50,12 @@ class AddFragment : Fragment() {
         onClik()
         onVi()
         edit()
+        binding.etIdf.setText(Pref(requireContext()).isLogin())
+        binding.etLayoutFio.setText(Pref(requireContext()).isLogin())
+        binding.etIdg.setText(Pref(requireContext()).isPasword())
+        binding.etLayoutFty.setText(Pref(requireContext()).isPasword())
+        binding.etLayoutFioDel.setText(Pref(requireContext()).isLogin())
+        binding.etLayoutFtyDel.setText(Pref(requireContext()).isPasword())
         return binding.root
     }
 
@@ -63,8 +71,18 @@ class AddFragment : Fragment() {
         binding.btn.setOnClickListener {
             onViewModel()
         }
+        binding.btnHjko.setOnClickListener {
+            onViewModel()
+        }
+
+        binding.btnDel.setOnClickListener {
+            onViewModel()
+        }
         binding.btnKkk.setOnClickListener {
             add()
+        }
+        binding.btnKkkDel.setOnClickListener {
+            deleteApartment()
         }
         binding.btnPk.setOnClickListener {
             upload()
@@ -140,6 +158,20 @@ class AddFragment : Fragment() {
         }
     }
 
+    private fun deleteApartment(){
+        Log.i("asdfqwer", "deleteApartment:${token}")
+        viewModel.deleteApartment("Bearer $token",binding.etLayoutFoDel.text.toString().toInt()).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS->{
+                    Toast.makeText(requireContext(), "Apartment ${binding.etLayoutFoDel.text.toString()} был удалён!!", Toast.LENGTH_SHORT).show()
+                    Log.i("delete", "deleteApartment:${it.data}")
+                }
+                Status.ERROR ->{}
+                Status.LOADING->{}
+            }
+        }
+    }
+
     fun add() {
         Log.i("ijuhy", "add:${binding.etL.isChecked}")
         apartmentCreate = ApartmentCreate(
@@ -159,7 +191,8 @@ class AddFragment : Fragment() {
             type = binding.etDil.text.toString().toInt(),
             floor = binding.etRoom.text.toString().toInt(),
             series = binding.etDvZxx.text.toString().toInt(),
-            region = binding.etDav.text.toString().toInt()
+            region = binding.etDav.text.toString().toInt(),
+            plot_weaving = "q w"
         )
         if (token.isEmpty() && binding.etDvX.text.toString().isEmpty() && binding.etDil.text.toString().isEmpty()  && binding.etRoom.text.toString().isEmpty() && binding.etDvZxx.text.toString().isEmpty() && binding.etDav.text.toString().isEmpty() && binding.etEr.text.toString().isEmpty() && binding.etText.text.toString().isEmpty() && binding.etKm.text.toString().isEmpty() && binding.etDf.text.toString().isEmpty() && binding.editIn.text.toString().isEmpty() && binding.etLocation.text.toString().isEmpty() && binding.etL.isChecked.toString().isEmpty() && binding.etSan.text.toString().isEmpty() && binding.etRoom.text.toString().isEmpty() && binding.etPhone.text.toString().isEmpty()){
             showToast(requireContext(),"Заполните все поля!!")
@@ -308,5 +341,25 @@ class AddFragment : Fragment() {
     private fun onClickCy(title: String) {
         binding.etEr.setText(title)
         binding.rvValute.isVisible = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.etIdf.setText(Pref(requireContext()).isLogin())
+        binding.etLayoutFio.setText(Pref(requireContext()).isLogin())
+        binding.etIdg.setText(Pref(requireContext()).isPasword())
+        binding.etLayoutFty.setText(Pref(requireContext()).isPasword())
+        binding.etLayoutFioDel.setText(Pref(requireContext()).isLogin())
+        binding.etLayoutFtyDel.setText(Pref(requireContext()).isPasword())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.etIdf.setText(Pref(requireContext()).isLogin())
+        binding.etLayoutFio.setText(Pref(requireContext()).isLogin())
+        binding.etIdg.setText(Pref(requireContext()).isPasword())
+        binding.etLayoutFty.setText(Pref(requireContext()).isPasword())
+        binding.etLayoutFioDel.setText(Pref(requireContext()).isLogin())
+        binding.etLayoutFtyDel.setText(Pref(requireContext()).isPasword())
     }
 }

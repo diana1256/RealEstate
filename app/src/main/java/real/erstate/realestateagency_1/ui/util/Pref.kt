@@ -15,12 +15,12 @@ class Pref ( context: Context) {
         sharedPref.edit().putBoolean("board", isSnow).apply()
     }
 
-    fun isProfile(): String {
-        return sharedPref.getString("username", "").toString()
+    fun isProfile(): Boolean {
+        return sharedPref.getBoolean("username", false)
     }
 
-    fun setProfileUser(isSnow: String) {
-        sharedPref.edit().putString("username", isSnow).apply()
+    fun setProfileUser(isSnow: Boolean) {
+        sharedPref.edit().putBoolean("username", isSnow).apply()
     }
 
     fun isSena(): String {
@@ -79,4 +79,26 @@ class Pref ( context: Context) {
         sharedPref.edit().putString("count", isSnow).apply()
     }
 
+    fun isLogin():String{
+        return sharedPref.getString("loginm","").toString()
+    }
+    fun setLogin(isSnow: String){
+        sharedPref.edit().putString("loginm",isSnow).apply()
+    }
+
+    fun isPasword():String{
+        return sharedPref.getString("paswordf","").toString()
+    }
+
+    fun setPasword(isSnow: String){
+        sharedPref.edit().putString("paswordf",isSnow).apply()
+    }
+
+    fun isToken():String{
+        return sharedPref.getString("token","").toString()
+    }
+
+    fun setToken(isSnow: String){
+        sharedPref.edit().putString("token",isSnow).apply()
+    }
 }

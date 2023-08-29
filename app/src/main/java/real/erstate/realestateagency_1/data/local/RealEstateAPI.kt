@@ -8,11 +8,33 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface RealEstateAPI {
+    suspend fun getIdApartment(id: String):Response<Apartment>
+    @GET("favorite/")
+    suspend fun getFavorite(
+        @Header("Authorization") token: String
+        ):Response<real.erstate.realestateagency_1.data.model.Response>
 
+    @DELETE("favorite/{id}/")
+    suspend fun deleteFav(
+        @Header("Authorization") token: String,
+        @Path("id")id : String
+    ):Response<Unit>
+
+    @DELETE("apartment/{id}/")
+    suspend fun deleteApartment(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int):Response<Unit>
+
+
+    @POST("favorite/")
+    suspend fun setFavorite(
+        @Header("Authorization") token: String,
+        @Body favorite: Favorite
+    ):Response<FavoriteResurce>
            @GET("apartment/")
          suspend fun getApartments(
                @Query("search") title: String,
-            ): Response<ApartmentListResponse>
+            ): Response<ApiResponse>
 
 
          @GET("apartment/")
@@ -25,17 +47,17 @@ interface RealEstateAPI {
     suspend fun searchSer(
         @Query("region")region: String,
         @Query("room_count") room:String
-    ):Response<ApartmentListResponse>
+    ):Response<ApiResponse>
 
     @GET("apartment/")
     suspend fun searchFil(
         @Query("region")region: String,
         @Query("room_count") room:String
-    ):Response<ApartmentListResponse>
+    ):Response<ApiResponse>
 
         @GET("apartment/")
         suspend fun setApartments(
-        ): Response<ApartmentListResponse>
+        ): Response<ApiResponse>
 
     @GET("apartment/{id}/")
     suspend fun setApartme(
@@ -76,7 +98,7 @@ interface RealEstateAPI {
         ): Response<Series>
 
 
-        @POST("token/login/")
+       @POST("token/login/")
        suspend fun createTokenLogin(
             @Body credentials: TokenObtainPair
         ): Response<LoginResponse>
@@ -87,21 +109,25 @@ interface RealEstateAPI {
 
         @GET("users/")
         suspend fun searchUsers(
-            @Query("login") query: String
+            @Query("login") query: String,
+            @Query("limit") sd: Int = 1
         ): Response<UserResponse>
 
-        @POST("users/?search=")
+        @POST("users/")
        suspend fun createUser(
             @Body user: addUser
         ): Response<UserResponse>
+
+       @PATCH("users/{id}/")
+       suspend fun createAdmin(
+           @Path("id") id: String ,
+           @Body user: admin
+       ):Response<admin>
 
        @POST("ads/")
        suspend fun addAds(
            @Body ads: Ads
        ): Response<AdsAp>
-
-       @GET("banner/")
-       suspend fun getBanner():Response<ImageResponse>
 
        @POST("document/apartment/")
        suspend fun addDocument(

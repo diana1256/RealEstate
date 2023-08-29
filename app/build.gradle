@@ -13,8 +13,8 @@ android {
         applicationId "real.erstate.realestateagency_1"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,6 +67,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //Lottie Animation
+    implementation 'com.airbnb.android:lottie:3.4.0'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"

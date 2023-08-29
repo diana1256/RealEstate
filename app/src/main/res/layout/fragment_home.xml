@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
+           <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/shimmer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,18 +24,17 @@
                 <include
                     android:id="@+id/load"
                     layout="@layout/home_load" />
-            </com.facebook.shimmer.ShimmerFrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/con"
-                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
                 <include
                     android:id="@+id/iem"
-                    layout="@layout/home_item"
-                    />
+                    layout="@layout/home_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -20,15 +20,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.databinding.FragmentPhotoSearchBinding
+import real.erstate.realestateagency_1.ui.fragment.all.real.AllRealFragment
+import real.erstate.realestateagency_1.ui.fragment.dashboard.real.RealSearchFragment.Companion.ID_SEACH
 import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.AdapterViewPager
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model
 
 
 class PhotoSearchFragment : Fragment() {
 
     private lateinit var binding:FragmentPhotoSearchBinding
     var img = ""
-    private val args by navArgs<PhotoSearchFragmentArgs>()
     private val viewModel : SearchphotoViewModel by viewModel()
+    private lateinit var model: Model
+
 
 
     override fun onCreateView(
@@ -39,31 +43,38 @@ class PhotoSearchFragment : Fragment() {
         binding = FragmentPhotoSearchBinding.inflate(inflater,container,false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initView()
-        onViewModel()
         return binding.root
     }
 
-    private fun onViewModel(){
-        viewModel.loading.observe(requireActivity()){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onViewModel()
+    }
+
+    private fun onViewModel() {
+        viewModel.loading.observe(requireActivity()) {
             binding.progresBar.isVisible = it
         }
-        viewModel.getImage(args.kjhg.id).observe(requireActivity()) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    viewModel.loading.postValue(false)
-                    Log.i("swdef", "onViewModel:${args.kjhg}")
-                    val adapterViewPager = AdapterViewPager(requireActivity(),args.kjhg)
-                    binding.vpv.adapter = adapterViewPager
-                    binding.dotsIndicator.attachTo(binding.vpv)
-                    val wer = args.kjhg.apartment_images
-                    val  er = wer[0]
-                    img = er.image
+        if (arguments != null) {
+            model = arguments?.getSerializable(ID_SEACH) as Model
+            viewModel.getImage(model.img).observe(requireActivity()) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        viewModel.loading.postValue(false)
+                        val adapterViewPager =
+                            it.data?.let { it1 -> AdapterViewPager(requireActivity(), it1) }
+                        binding.vpv.adapter = adapterViewPager
+                        binding.dotsIndicator.attachTo(binding.vpv)
+                        val wer = it.data?.apartment_images
+                        val er = wer?.get(0)
+                        img = er?.image.toString()
+                    }
+                    Status.ERROR -> {
+                        viewModel.loading.postValue(true)
+                        Log.i("olerrt", "initViewModel:${it.message}")
+                    }
+                    Status.LOADING -> viewModel.loading.postValue(true)
                 }
-                Status.ERROR -> {
-                    viewModel.loading.postValue(true)
-                    Log.i("olerrt", "initViewModel:${it.message}")
-                }
-                Status.LOADING -> viewModel.loading.postValue(true)
             }
         }
     }

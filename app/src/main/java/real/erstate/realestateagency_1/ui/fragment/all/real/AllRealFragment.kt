@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,36 +24,39 @@ import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.ApartmentImage
 import real.erstate.realestateagency_1.databinding.FragmentAllRealBinding
-import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragmentArgs
-import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragmentDirections
+import real.erstate.realestateagency_1.ui.fragment.all.AllFragment.Companion.ID_ALL
+import real.erstate.realestateagency_1.ui.fragment.home.HomeFragment
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragment
 import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateViewModel
 import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.AdapterViewPager
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model
 
 
 class AllRealFragment : Fragment() {
 
     private lateinit var binding: FragmentAllRealBinding
-    private val viewModel: RealEstateViewModel by viewModel()
-
-    private val args by navArgs<AllRealFragmentArgs>()
+    private val viewModel: AllRealViewModel by viewModel()
     private var isButtonClicked = false
+    private lateinit var model: Model
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-         binding = FragmentAllRealBinding.inflate(inflater,
+        binding = FragmentAllRealBinding.inflate(inflater,
             container,
             false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        binding.shimmer.startShimmer()
         initView()
         onClik()
-        onViewModel()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onViewModel()
+    }
     fun onClik() {
         binding.item.ivHeart.setOnClickListener {
             isButtonClicked = !isButtonClicked
@@ -63,12 +67,6 @@ class AllRealFragment : Fragment() {
                 binding.item.ivHeart.setBackgroundResource(R.drawable.heart)
             }
         }
-
-        binding.item.tvPh.setOnClickListener {
-            val pri = args.yhnbv.lat
-            val formattedNumber = pri.replace(".0+$".toRegex(), "")
-            makePhoneCall(formattedNumber)
-        }
     }
 
     fun makePhoneCall(phoneNumber: String) {
@@ -78,54 +76,63 @@ class AllRealFragment : Fragment() {
         startActivity(intent)
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun onViewModel() {
-        binding.con.isVisible = true
-        binding.shimmer.isVisible = false
         viewModel.loading.observe(requireActivity()) {
-            binding.shimmer.isVisible = false
+            binding.shimmer.isVisible = it
         }
-        Log.i("edfrgt", "onViewModel:${args.yhnbv.id}")
-        viewModel.getApartment().observe(requireActivity()) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    viewModel.loading.postValue(false)
-                    Log.i("hbhuju", "onViewModel:${it.data}")
-                    binding.item.tvTitle.setText(args.yhnbv.title)
-                    binding.item.tvDesc.text = args.yhnbv.description
-                    binding.item.tvDil.setText(args.yhnbv.type.title)
-                    binding.item.tvLocation.text = args.yhnbv.address
-                    binding.item.tvRoom.text = args.yhnbv.room_count
-                    binding.item.tvKm.text = args.yhnbv.square
-                    binding.item.tvSzsd.text = args.yhnbv.currency.symbol
-                    binding.item.document.text = "Документы : ${args.yhnbv.document.title}"
-                    binding.item.floor.text = "Этажность : ${args.yhnbv.floor.title}"
-                    binding.item.comunikation.text = "Коммуникации : ${args.yhnbv.communications}"
-                    binding.item.series.text = "Состояние :${args.yhnbv.series.title}"
-                    val pri = args.yhnbv.price
-                    val formattedNumber = pri.replace(".0+$".toRegex(), "")
-                    binding.item.tvSan.text = formattedNumber
-                    binding.item.tvName.text = args.yhnbv.author.first_name
-                    val adapterViewPager = AdapterViewPager(requireActivity(),args.yhnbv)
-                    Log.i("sxdcfr", "onViewModel:$it")
-                    binding.con.isVisible = true
-                    binding.item.vpv.adapter = adapterViewPager
-                    binding.item.dotsIndicator.attachTo(binding.item.vpv)
-                    adapterViewPager.setOnItemClickListener(object :
-                        AdapterViewPager.OnItemClickListener {
-                        override fun onItemClick(image: ApartmentImage) {
-                           val  der = AllRealFragmentDirections.actionAllRealFragmentToPhotoAllFragment(args.yhnbv)
-                                findNavController().navigate(der)
-
+        if (arguments != null) {
+            model = arguments?.getSerializable(ID_ALL) as Model
+            Log.i("cdvfbgnh", "onViewModel:${model.img}")
+            viewModel.getApartment(model.img).observe(requireActivity()) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        viewModel.loading.postValue(false)
+                        Log.i("hbhuju", "onViewModel:${it.data}")
+                        binding.item.tvTitle.setText(it.data?.title)
+                        binding.item.tvDesc.text = it.data?.description
+                        binding.item.tvDil.setText(it.data?.type?.title)
+                        binding.item.tvLocation.text = it.data?.address
+                        binding.item.tvRoom.text = it.data?.room_count
+                        binding.item.tvKm.text = it.data?.square
+                        binding.item.document.text = "Документы : ${it.data?.document?.title}"
+                        binding.item.floor.text = "Этажность : ${it.data?.floor?.title}"
+                        binding.item.comunikation.text = "Коммуникации : ${it.data?.communications}"
+                        binding.item.series.text = "Состояние :${it.data?.series?.title}"
+                        val pri = it.data?.price
+                        binding.item.tvSzsd.text = it.data?.currency?.symbol
+                        val formattedNumber = pri?.replace(".0+$".toRegex(), "")
+                        binding.item.tvSan.text = formattedNumber
+                        binding.item.tvName.text = it.data?.author?.first_name
+                        binding.con.isVisible = true
+                        val adapterViewPager =
+                            it.data?.let { it1 -> AdapterViewPager(requireActivity(), it1) }
+                        Log.i("sxdcfr", "onViewModel:${it.data}")
+                        binding.item.vpv.adapter = adapterViewPager
+                        binding.item.dotsIndicator.attachTo(binding.item.vpv)
+                        val lat = it.data?.lat
+                        adapterViewPager?.setOnItemClickListener(object :
+                            AdapterViewPager.OnItemClickListener {
+                            override fun onItemClick(image: ApartmentImage) {
+                                val mi = Model(img = it.data.id)
+                                findNavController().navigate(R.id.photoAllFragment, bundleOf(
+                                    ID_ALL_REAL to mi)
+                                )
+                            }
+                        })
+                        binding.item.tvPh.setOnClickListener {
+                            val formattedNumber = lat?.replace(".0+$".toRegex(), "")
+                            if (formattedNumber != null) {
+                                makePhoneCall(formattedNumber)
+                            }
                         }
-                    })
+                    }
+                    Status.ERROR -> {
+                        viewModel.loading.postValue(true)
+                        Log.i("olerrt", "initViewModel:${it.message}")
+                    }
+                    Status.LOADING -> viewModel.loading.postValue(true)
                 }
-                Status.ERROR -> {
-                    viewModel.loading.postValue(true)
-                    Log.i("olerrt", "initViewModel:${it.message}")
-                }
-                Status.LOADING -> viewModel.loading.postValue(true)
             }
         }
     }
@@ -166,4 +173,7 @@ class AllRealFragment : Fragment() {
         }
     }
 
+    companion object {
+        const val ID_ALL_REAL ="id_all_real"
+    }
 }

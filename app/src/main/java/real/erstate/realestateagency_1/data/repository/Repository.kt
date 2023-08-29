@@ -1,14 +1,10 @@
 package real.erstate.realestateagency_1.data.repository
 
 import androidx.lifecycle.liveData
-
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MultipartBody
 import real.erstate.realestateagency_1.data.local.result.Resource
-import real.erstate.realestateagency_1.data.model.Ads
-import real.erstate.realestateagency_1.data.model.ApartmentCreate
-import real.erstate.realestateagency_1.data.model.TokenObtainPair
-import real.erstate.realestateagency_1.data.model.addUser
+import real.erstate.realestateagency_1.data.model.*
 
 
 class Repository (private val remoteDataSource: RemoteDataSource) {
@@ -17,6 +13,12 @@ class Repository (private val remoteDataSource: RemoteDataSource) {
         emit(Resource.loading())
        val filter =remoteDataSource.searFilter(title)
         emit(filter)
+    }
+
+    fun deleteFav(token: String,id: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val we = remoteDataSource.delete(token,id)
+        emit(we)
     }
 
     fun getRew()= liveData(Dispatchers.IO) {
@@ -28,6 +30,12 @@ class Repository (private val remoteDataSource: RemoteDataSource) {
         emit(Resource.loading())
         val inf = remoteDataSource.setImage(id)
         emit(inf)
+    }
+
+    fun serFavorite(token: String,moe:Favorite) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val wer = remoteDataSource.setFavorite(token,moe)
+        emit(wer)
     }
     fun  searchUser(name:String) = liveData(Dispatchers.IO) {
         emit(Resource.loading())
@@ -83,18 +91,23 @@ class Repository (private val remoteDataSource: RemoteDataSource) {
         emit(addUser)
     }
 
-    fun getBanner() = liveData(Dispatchers.IO) {
-        emit(Resource.loading())
-        val banner = remoteDataSource.addBanner()
-        emit(banner)
-    }
-
     fun addAds(data: Ads) = liveData(Dispatchers.IO) {
         emit(Resource.loading())
         val addAds = remoteDataSource.addAds(data)
         emit(addAds)
     }
 
+    fun getFavorite(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val fav = remoteDataSource.getFavorite(token)
+        emit(fav)
+    }
+
+    fun getIdApartment(id: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val idf = remoteDataSource.getIdApartment(id)
+        emit(idf)
+    }
     fun getType() = liveData(Dispatchers.IO) {
         emit(Resource.loading())
         val type = remoteDataSource.getType()
@@ -178,5 +191,17 @@ class Repository (private val remoteDataSource: RemoteDataSource) {
         emit(Resource.loading())
         val sear = remoteDataSource.searchFil( region, room)
         emit(sear)
+    }
+
+    fun createAdmin(id: String,admin: admin) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val admin = remoteDataSource.createAdmin(id,admin)
+        emit(admin)
+    }
+
+    fun deleteApartment(token: String,id: Int) = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val delete = remoteDataSource.deleteApartment(token,id)
+        emit(delete)
     }
 }

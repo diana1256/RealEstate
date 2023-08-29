@@ -17,9 +17,6 @@ class AddViewModel (private val repository: Repository):ViewModel() {
         return repository.addApartment(token,data)
     }
 
-      fun setFloor(token: String, data: String): LiveData<Resource<Floor>>{
-        return repository.setFloor(token, data)
-    }
 
       fun setImage(token: String, imageFile: MultipartBody.Part, apartmentId: Int): LiveData<Resource<ApartmentImage>>{
         return repository.setImage(token, imageFile, apartmentId)
@@ -34,9 +31,6 @@ class AddViewModel (private val repository: Repository):ViewModel() {
         return repository.getCurrency()
     }
 
-    fun  addCyrency(token:String,symbol:String,name: String): LiveData<Resource<real.erstate.realestateagency_1.data.model.Result>> {
-        return  repository.addCurrency(token,symbol,name)
-    }
 
     fun getType(): LiveData<Resource<DataResponse>> {
         return repository.getType()
@@ -54,13 +48,8 @@ class AddViewModel (private val repository: Repository):ViewModel() {
         return repository.addDocument(token, name)
     }
 
-    fun addType(token:String,name:String): LiveData<Resource<real.erstate.realestateagency_1.data.model.Result>> {
-        return repository.addType(token, name)
-    }
 
-    fun addRegion(token:String,name:String): LiveData<Resource<real.erstate.realestateagency_1.data.model.Result>> {
-        return repository.addRegion(token, name)
-    }
+
 
     fun addSeries(token:String,name:String): LiveData<Resource<Series>> {
         return repository.addSeries(token,name)
@@ -72,5 +61,9 @@ class AddViewModel (private val repository: Repository):ViewModel() {
 
     fun addTokenLogin(data: TokenObtainPair) : LiveData<Resource<LoginResponse>> {
         return repository.addTokenLogin(data)
+    }
+
+    fun deleteApartment(token: String,id:Int): LiveData<Resource<Unit>>{
+        return repository.deleteApartment(token,id)
     }
 }

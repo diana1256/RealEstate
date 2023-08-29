@@ -5,24 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import real.erstate.realestateagency_1.data.local.result.Resource
 import real.erstate.realestateagency_1.data.model.ApartmentListResponse
+import real.erstate.realestateagency_1.data.model.ApiResponse
 import real.erstate.realestateagency_1.data.model.DataReonse
 import real.erstate.realestateagency_1.data.model.DataResponse
-import real.erstate.realestateagency_1.data.model.ImageResponse
 import real.erstate.realestateagency_1.data.repository.Repository
 
 class FilterViewModel(private val repository: Repository) : ViewModel() {
 
     val loading = MutableLiveData<Boolean>()
 
-    fun getApartment(): LiveData<Resource<ApartmentListResponse>> {
+    fun getApartment(): LiveData<Resource<ApiResponse>> {
         return repository.setApartment()
     }
 
-    fun getBanner(): LiveData<Resource<ImageResponse>>{
-        return repository.getBanner()
-    }
-
-    fun searchFil(title: String): LiveData<Resource<ApartmentListResponse>> {
+    fun searchFil(title: String): LiveData<Resource<ApiResponse>> {
         return repository.searFilter(title)
     }
 

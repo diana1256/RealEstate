@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +29,19 @@
                     android:layout_width="363dp"
                     android:layout_height="134dp"
                     android:background="#DDDEE1"
+                    android:layout_marginTop="31.74dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/vpv_anim"
+                    android:layout_width="363dp"
+                    android:layout_height="134dp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
                     android:layout_marginTop="31.74dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,18 +89,34 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                  <TextView
-                       android:id="@+id/tv_km"
-                       android:layout_width="188dp"
-                       android:layout_height="24dp"
-                       android:layout_marginStart="16dp"
-                       android:layout_marginTop="12dp"
-                       android:background="#DDDEE1"
-                       android:textColor="@color/black"
-                       android:textSize="18sp"
-                       android:textStyle="bold"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_km"
+                    android:layout_width="188dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:background="#DDDEE1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/tv_km_anim"
+                    android:layout_width="188dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -110,17 +142,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rv_one" />
 
-                 <TextView
-                      android:id="@+id/tv_room"
-                      android:layout_width="118dp"
-                      android:layout_height="20dp"
-                      android:layout_marginTop="12dp"
-                      android:textColor="#1C3A75"
-                      android:textSize="14sp"
-                      android:background="@drawable/screensaver"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toBottomOf="@id/rv_one" />
+                <TextView
+                    android:id="@+id/tv_room"
+                    android:layout_width="118dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="12dp"
+                    android:textColor="#1C3A75"
+                    android:textSize="14sp"
+                    android:background="#DDDEE1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_one" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/tv_room_anim"
+                    android:layout_width="118dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="12dp"
+                    android:textColor="#1C3A75"
+                    android:textSize="14sp"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_one" />
 
                 <View
                     android:id="@+id/line"
@@ -146,18 +193,33 @@
                     app:layout_constraintTop_toBottomOf="@id/line" />
 
 
-                  <TextView
-                      android:id="@id/tv_km"
-                      android:layout_width="163dp"
-                      android:layout_height="20dp"
-                      android:layout_marginStart="16dp"
-                      android:layout_marginTop="13.5dp"
-                      android:background="@drawable/screensaver"
-                      android:textColor="@color/black"
-                      android:textSize="18sp"
-                      android:textStyle="bold"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toBottomOf="@id/line" />
+                <TextView
+                    android:id="@id/tv_km"
+                    android:layout_width="163dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="13.5dp"
+                    android:background="#DDDEE1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@id/tv_km_anim"
+                    android:layout_width="163dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="13.5dp"
+                    android:textColor="@color/black"
+                    app:lottie_rawRes="@raw/anim"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line" />
+
 
                 <ImageView
                     android:id="@+id/filter"

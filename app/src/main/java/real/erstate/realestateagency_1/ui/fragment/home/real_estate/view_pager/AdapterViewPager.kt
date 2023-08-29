@@ -17,7 +17,9 @@ class AdapterViewPager(
 
     private var onItemClickListener: OnItemClickListener? = null
 
-    override fun getItemCount(): Int = listImage.apartment_images.size
+
+
+    override fun getItemCount(): Int =  listImage?.apartment_images?.size ?: 0
 
     fun getTask(pos: Int): ApartmentImage {
         return listImage.apartment_images[pos]

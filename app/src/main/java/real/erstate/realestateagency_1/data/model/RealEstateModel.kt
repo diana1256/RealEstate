@@ -91,6 +91,16 @@ data class ApartmentImage(
     val apartment: Int
 ) : java.io.Serializable
 
+data class FavoriteResurce(
+    val id : Int,
+    val created_at: String,
+    val user: String,
+    val apartment: String
+)
+data class Favorite(
+    val user : String,
+    val apartment : String
+)
 data class ImageApartmentListResponse(
     val count: Int,
     val next: String?,
@@ -123,7 +133,6 @@ data class User(
     var is_active: Boolean
 )
 
-
 data class UserResponse(
     val count: Int,
     val next: String?,
@@ -149,6 +158,7 @@ data class ApartmentCreate(
     val series: Int,
     val region: Int,
     val currency: Int,
+    val plot_weaving: String
 )
 
 data class Service(

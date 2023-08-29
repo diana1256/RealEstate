@@ -12,8 +12,8 @@ class AllRealViewModel(private val repository: Repository): ViewModel(){
 
     val loading = MutableLiveData<Boolean>()
 
-    fun getApartment(): LiveData<Resource<ApartmentListResponse>> {
-        return repository.setApartment()
+    fun getApartment(id:String): LiveData<Resource<Apartment>> {
+        return repository.setIm(id)
     }
     fun  getImage(limit: String): LiveData<Resource<Apartment>> {
         return repository.setIm(limit)

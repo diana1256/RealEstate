@@ -20,92 +20,101 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.button.MaterialButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import real.erstate.realestateagency_1.R
-import real.erstate.realestateagency_1.databinding.FragmentPhotoBinding
 import real.erstate.realestateagency_1.data.local.result.Status
-import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragmentArgs
-
+import real.erstate.realestateagency_1.databinding.FragmentPhotoBinding
+import real.erstate.realestateagency_1.ui.fragment.home.HomeFragment
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragment.Companion.ID_APART
 import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.AdapterViewPager
-import kotlin.random.Random
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model
+
 
 class PhotoFragment : Fragment() {
 
-    private lateinit var binding : FragmentPhotoBinding
-
+    private lateinit var binding: FragmentPhotoBinding
+    private lateinit var model: Model
     var img = ""
-    private val args by navArgs<PhotoFragmentArgs>()
 
-    private val viewModel : PhotoViewModel by viewModel()
+    private val viewModel: PhotoViewModel by viewModel()
+
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentPhotoBinding.inflate(inflater,container,false)
+        binding = FragmentPhotoBinding.inflate(inflater, container, false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initView()
-        onViewModel()
         return binding.root
     }
 
-    private fun onViewModel(){
-        viewModel.loading.observe(requireActivity()){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onViewModel()
+    }
+
+    private fun onViewModel() {
+        viewModel.loading.observe(requireActivity()) {
             binding.progresBar.isVisible = it
         }
-        viewModel.getImage(args.qwe.id).observe(requireActivity()) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    viewModel.loading.postValue(false)
-                    Log.i("zasxd", "onViewModel:${args.qwe}")
-                    val adapterViewPager = AdapterViewPager(requireActivity(),args.qwe)
-                    binding.vpv.adapter = adapterViewPager
-                    binding.dotsIndicator.attachTo(binding.vpv)
-                    val wer = args.qwe.apartment_images
-                    val  er = wer[0]
-                    img = er.image
+        if (arguments != null) {
+            model = arguments?.getSerializable(ID_APART) as Model
+            viewModel.getImage(model.img).observe(requireActivity()) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        viewModel.loading.postValue(false)
+                        val adapterViewPager =
+                            it.data?.let { it1 -> AdapterViewPager(requireActivity(), it1) }
+                        binding.vpv.adapter = adapterViewPager
+                        binding.dotsIndicator.attachTo(binding.vpv)
+                        val wer = it.data?.apartment_images
+                        val er = wer?.get(0)
+                        img = er?.image.toString()
+                    }
+                    Status.ERROR -> {
+                        viewModel.loading.postValue(true)
+                        Log.i("olerrt", "initViewModel:${it.message}")
+                    }
+                    Status.LOADING -> viewModel.loading.postValue(true)
                 }
-                Status.ERROR -> {
-                    viewModel.loading.postValue(true)
-                    Log.i("olerrt", "initViewModel:${it.message}")
+            }
+        }
+        }
+
+        private fun initView() {
+            binding.ivBlack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+
+            binding.alertTv.setOnClickListener {
+                val view =
+                    LayoutInflater.from(requireContext()).inflate(R.layout.diolog_photo, null)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setView(view)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setGravity(Gravity.BOTTOM)
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.setCancelable(true)
+                val btn = view.findViewById<MaterialButton>(R.id.btn_tri)
+                btn.setOnClickListener {
+                    dialog.dismiss()
                 }
-                Status.LOADING -> viewModel.loading.postValue(true)
+                val v = view.findViewById<CardView>(R.id.card_iv)
+                v.setOnClickListener {
+                    shepe(img)
+                }
+            }
+        }
+
+        fun shepe(link: String) {
+            val sengerind = Intent(Intent.ACTION_SEND)
+            sengerind.type = "text/planin"
+            sengerind.putExtra(Intent.EXTRA_TEXT, link)
+            sengerind.`package` = "com.whatsapp"
+            try {
+                startActivity(sengerind)
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
             }
         }
     }
-
-    private fun initView() {
-        binding.ivBlack.setOnClickListener{
-            findNavController().navigateUp()
-        }
-
-        binding.alertTv.setOnClickListener {
-            val view = LayoutInflater.from(requireContext()).inflate(R.layout.diolog_photo, null)
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setView(view)
-            val dialog = builder.create()
-            dialog.show()
-            dialog.window?.setGravity(Gravity.BOTTOM)
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.setCancelable(true)
-            val btn = view.findViewById<MaterialButton>(R.id.btn_tri)
-            btn.setOnClickListener {
-                dialog.dismiss()
-            }
-            val v = view.findViewById<CardView>(R.id.card_iv)
-            v.setOnClickListener {
-                shepe(img)
-            }
-        }
-    }
-
-    fun shepe(link:String){
-        val sengerind = Intent(Intent.ACTION_SEND)
-        sengerind.type = "text/planin"
-        sengerind.putExtra(Intent.EXTRA_TEXT,link)
-        sengerind.`package` = "com.whatsapp"
-        try {
-            startActivity(sengerind)
-        }catch (e: ActivityNotFoundException){
-            e.printStackTrace()
-        }
-    }
-}

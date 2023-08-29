@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
@@ -37,28 +38,21 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        Pref(requireContext()).setLogin(binding.email.text.toString())
+        Pref(requireContext()).setPasword(binding.password.text.toString())
         initView()
         return binding.root
     }
 
     private fun initView() {
-        binding.voite.setOnClickListener {
-            onLoginClicked()
+
+         binding.voite.setOnClickListener {
+             Pref(requireContext()).setLogin(binding.email.text.toString())
+             Pref(requireContext()).setPasword(binding.password.text.toString())
+             onLoginClicked()
         }
         binding.newAcoynt.setOnClickListener {
             findNavController().navigate(R.id.registrationFragment)
-        }
-    }
-
-    private fun onLoginClicked() {
-        val email = binding.email.text.toString()
-        if (email.isNotEmpty()) {
-            searchUser(email)
-            val pref = Pref(requireContext())
-            pref.setBoardingShowed(true)
-            findNavController().navigate(R.id.navigation_home)
-        } else {
-            showToast(requireContext(), "Введите мя пользователя")
         }
     }
 
@@ -70,7 +64,17 @@ class LoginFragment : Fragment() {
             when(it.status) {
                 Status.SUCCESS ->{
                     viewModel.loading.postValue(false)
-                    registrationListener?.onRegistrationStatusChanged(binding.email.text.toString())
+                    if (it.data?.results?.isEmpty() == true){
+                        Toast.makeText(requireContext(), "Такого пользователя нет!!", Toast.LENGTH_SHORT).show()
+                    }else{
+                        it.data?.results?.get(0)?.let { it1 ->
+                            registrationListener?.onRegistrationStatusChanged(
+                                it1.is_superuser)
+                        }
+                        findNavController().navigate(R.id.navigation_home)
+                    }
+
+
                 }
                 Status.ERROR ->{
                     viewModel.loading.postValue(true)
@@ -79,6 +83,17 @@ class LoginFragment : Fragment() {
                     viewModel.loading.postValue(false)
                 }
             }
+        }
+    }
+
+    private fun onLoginClicked() {
+        val email = binding.email.text.toString()
+        if (email.isNotEmpty() && binding.password.text.isNotEmpty()) {
+            searchUser(email)
+            val pref = Pref(requireContext())
+            pref.setBoardingShowed(true)
+             } else {
+            showToast(requireContext(), "Введите имя пользователя или пароль!!")
         }
     }
 }

@@ -3,153 +3,117 @@ package real.erstate.realestateagency_1.ui.fragment.notifications
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import real.erstate.realestateagency_1.R
-import real.erstate.realestateagency_1.data.entity.Favorite
 import real.erstate.realestateagency_1.data.entity.LoadRel
 import real.erstate.realestateagency_1.ui.fragment.home.AdapterTwoLoad
 import real.erstate.realestateagency_1.data.local.result.Status
-import real.erstate.realestateagency_1.data.room.FavDB
 import real.erstate.realestateagency_1.databinding.FragmentNotificationsBinding
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model
+import real.erstate.realestateagency_1.ui.util.Pref
 
 class NotificationsFragment : Fragment() {
 
-    private lateinit var binding: FragmentNotificationsBinding
-    private lateinit var favDB: FavDB
-    private lateinit var fav : Favorite
-    private val viewModel : NotificationsViewModel by viewModel()
-    private lateinit var adapterFav: AdapterFav
-    private var favItemList: MutableList<Favorite> = mutableListOf()
-
+    private lateinit var binding : FragmentNotificationsBinding
+    private val   allViewModel : NotificationsViewModel by viewModel()
+    private val listTwoLoad = ArrayList<LoadRel>()
+    private val adapterTwoLoad = AdapterTwoLoad()
+    private var idFav = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+
+        binding = FragmentNotificationsBinding.inflate(inflater,container,false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        binding.shimmer.startShimmer()
-        val listLoad: ArrayList<LoadRel> = arrayListOf()
-        repeat(8) {
-            listLoad.add(
+        repeat(10) {
+            listTwoLoad.add(
                 LoadRel(
                     image = R.drawable.screensaver,
-                    tvDil = "",
-                    tvTitle = "",
+                    tvRoom = "",
+                    tvLocation = "",
                     tvSan = "",
                     tvKm = "",
-                    tvLocation = "",
-                    tvRoom = "",
+                    tvTitle = "",
+                    tvDil = "",
                     id = ""
                 )
             )
         }
-        val adapterLoad = AdapterTwoLoad()
-        binding.load.rv.adapter = adapterLoad
-        adapterLoad.submitList(listLoad)
+
+        binding.load.rv.adapter = adapterTwoLoad
+        adapterTwoLoad.submitList(listTwoLoad)
         onViewModel()
         return binding.root
     }
 
 
     private fun onViewModel(){
-        viewModel.loading.observe(requireActivity()){
+        allViewModel.loading.observe(requireActivity()){
             binding.shimmer.isVisible = it
         }
-
-        viewModel.getApartment().observe(requireActivity()){
-            when(it.status){
-                Status.SUCCESS->{
-                    viewModel.loading.postValue(false)
+        Log.i("asdfg", "onViewModel:${Pref(requireContext()).isToken()}")
+        allViewModel.getApartment("Bearer ${Pref(requireContext()).isToken()}").observe(requireActivity()) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    allViewModel.loading.postValue(false)
                     binding.con.isVisible = true
-                    favDB = FavDB(requireActivity())
-                    loadData()
-                    val itemTouchHelper = ItemTouchHelper(simpleCallback)
-                    itemTouchHelper.attachToRecyclerView(binding.item.rvH)
+                    Log.i("qjkloewfv", "onViewModel:${it}")
+                   val adapterAll = it.data?.let { it1 -> AdapterFav(this::onId,it1,this::onClick,this::Fav) }
+                    binding.item.rvH.adapter = adapterAll
+                    binding.item.tvText.isVisible = adapterAll!!.itemCount <= 0
                 }
-                Status.ERROR->{
-                    viewModel.loading.postValue(true)
+                Status.ERROR -> {
+                    allViewModel.loading.postValue(true)
+                    Log.i("ololo", "initViewModel:${it.message}")
                 }
-                Status.LOADING -> viewModel.loading.postValue(true)
+                Status.LOADING ->  allViewModel.loading.postValue(true)
             }
         }
-
     }
 
-
-    @SuppressLint("Range")
-    private fun loadData() {
-        favItemList.clear()
-        val db = favDB.readableDatabase
-        val cursor = favDB.selectAllFavoriteList()
-        try {
-            while (cursor.moveToNext()) {
-                val title = cursor.getString(cursor.getColumnIndex(FavDB.ITEM_TITLE))
-                val id = cursor.getString(cursor.getColumnIndex(FavDB.KEY_ID))
-                val image = cursor.getString(cursor.getColumnIndex(FavDB.ITEM_IMAGE))
-                val dil = cursor.getString(cursor.getColumnIndex(FavDB.DIL))
-                val room = cursor.getString(cursor.getColumnIndex(FavDB.ROOM))
-                val san = cursor.getString(cursor.getColumnIndex(FavDB.SAN))
-                val local = cursor.getString(cursor.getColumnIndex(FavDB.LOCAL))
-                val km = cursor.getString(cursor.getColumnIndex(FavDB.KM))
-                val status = cursor.getString(cursor.getColumnIndex(FavDB.PRICE))
-                val favItem = Favorite(
-                    id,
-                    status,
-                    image,
-                    dil,
-                    title,
-                    san,
-                    km,
-                    room,
-                    local
-                )
-                fav = favItem
-                favItemList.add(favItem)
-            }
-        } finally {
-            cursor.close()
-            db?.close()
-        }
-        adapterFav = AdapterFav(requireActivity(), favItemList,this::onClick)
-        binding.item.rvH.adapter = adapterFav
-            binding.item.tvText.isVisible = adapterFav.itemCount <= 0
+    private fun onId(id:String){
+        idFav = id
+        Log.i("asdf", "onId:$id")
     }
-
-    private fun onClick(fav:Favorite,id: String){
-        val awer = Favorite(fav.id,id,fav.image,fav.tvDil,fav.tvTitle,fav.tvSan,fav.tvKm,fav.tvRoom,fav.tvLocation)
-     val tyu = NotificationsFragmentDirections.actionNavigationNotificationsToRealFavFragment3(awer)
-        findNavController().navigate(tyu)
+    private fun onClick(id:String){
+        val op = Model(img = id)
+        findNavController().navigate(R.id.realFavFragment, bundleOf(ID_FAV_QWE to op))
     }
-
-    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            return false
-        }
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.adapterPosition
-            val favItem = favItemList[position]
-            if (direction == ItemTouchHelper.LEFT) {
-                favItemList.removeAt(position)
-                adapterFav.submitList(favItemList.toMutableList())
-                adapterFav.notifyItemRemoved(position)
-                adapterFav.notifyItemRangeChanged(position, adapterFav.itemCount)
-                favDB.removeFav(favItem.id)
+    private fun Fav(fav:Boolean){
+        binding.con.isVisible = false
+        allViewModel.loading.postValue(true)
+        Log.i("qvbm", "Fav:$fav")
+        allViewModel.delete("Bearer ${Pref(requireContext()).isToken()}",idFav).observe(requireActivity()){
+            when(it.status){
+                Status.SUCCESS -> {
+                    onViewModel()
+                    allViewModel.loading.postValue(false)
+                    Log.i("qswdefrghpl", "Fav:$it")
+                }
+                Status.ERROR ->{
+                    allViewModel.loading.postValue(true)
+                    Log.i("fklqd", "Fav:$it")
+                }
+                Status.LOADING ->{
+                    allViewModel.loading.postValue(true)
+                    Log.i("pkgeq", "Fav:$it")
+                }
             }
         }
+    }
+
+    companion object{
+        const val ID_FAV_QWE = "id_fav_sdf"
     }
 }

@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/shimmer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
                 <include
                     android:id="@+id/load"
                     layout="@layout/load_about_us" />
-            </com.facebook.shimmer.ShimmerFrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/con"

@@ -28,12 +28,6 @@ class AdapterLoad : ListAdapter<ModelUs,
     inner class ViewHolder(private val binding: AboutLoadRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(note: ModelUs) {
-            binding.desc.text = note.desc
-            binding.ivStar.setImageResource(note.star)
-            binding.tvName.text = note.name
-            binding.descTwo.text = note.desc
-            binding.descThee.text = note.desc
-            binding.descFour.text = note.desc
         }
     }
 

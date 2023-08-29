@@ -11,7 +11,6 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
 
-
         <action
             android:id="@+id/action_navigation_home_to_realEstateFragment2"
             app:destination="@id/realEstateFragment" />
@@ -78,13 +77,9 @@
         android:label="fragment_real_estate"
         tools:layout="@layout/fragment_real_estate">
 
-
         <action
             android:id="@+id/action_realEstateFragment_to_photoFragment"
             app:destination="@id/photoFragment" />
-        <argument
-            android:name="asd"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
@@ -92,10 +87,6 @@
         android:label="fragment_photo"
         tools:layout="@layout/fragment_photo" >
 
-
-        <argument
-            android:name="qwe"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
     </fragment>
     <fragment
         android:id="@+id/onBoardVpFragment"
@@ -119,10 +110,7 @@
         android:name="real.erstate.realestateagency_1.ui.fragment.all.real.AllRealFragment"
         android:label="fragment_all_real"
         tools:layout="@layout/fragment_all_real" >
-        <argument
-            android:name="yhnbv"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
-        <action
+      <action
             android:id="@+id/action_allRealFragment_to_photoAllFragment"
             app:destination="@id/photoAllFragment" />
     </fragment>
@@ -132,19 +120,13 @@
         android:label="fragment_photo_all"
         tools:layout="@layout/fragment_photo_all" >
 
-        <argument
-            android:name="poik"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
-    </fragment>
+      </fragment>
     <fragment
         android:id="@+id/photoSearchFragment"
         android:name="real.erstate.realestateagency_1.ui.fragment.dashboard.real.photo.PhotoSearchFragment"
         android:label="fragment_photo_search"
         tools:layout="@layout/fragment_photo_search" >
-        <argument
-            android:name="kjhg"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
-    </fragment>
+     </fragment>
     <fragment
         android:id="@+id/realSearchFragment2"
         android:name="real.erstate.realestateagency_1.ui.fragment.dashboard.real.RealSearchFragment"
@@ -153,19 +135,13 @@
         <action
             android:id="@+id/action_realSearchFragment2_to_photoSearch_Fragment"
             app:destination="@id/photoSearchFragment" />
-        <argument
-            android:name="lkjh"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
-    </fragment>
+         </fragment>
     <fragment
         android:id="@+id/photoFavFragment"
         android:name="real.erstate.realestateagency_1.ui.fragment.notifications.real.photo.PhotoFavFragment"
         android:label="fragment_photo_fav"
         tools:layout="@layout/fragment_photo_fav" >
-        <argument
-            android:name="bnmml"
-            app:argType="real.erstate.realestateagency_1.data.model.Apartment" />
-    </fragment>
+  </fragment>
     <fragment
         android:id="@+id/realFavFragment"
         android:name="real.erstate.realestateagency_1.ui.fragment.notifications.real.RealFavFragment"
@@ -174,9 +150,6 @@
         <action
             android:id="@+id/action_realFavFragment_to_photoFavFragment"
             app:destination="@id/photoFavFragment" />
-        <argument
-            android:name="lkjh"
-            app:argType="real.erstate.realestateagency_1.data.entity.Favorite" />
 
     </fragment>
 </navigation>

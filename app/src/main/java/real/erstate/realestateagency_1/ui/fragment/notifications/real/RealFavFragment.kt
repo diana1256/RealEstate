@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,26 +24,30 @@ import real.erstate.realestateagency_1.R
 import real.erstate.realestateagency_1.data.local.result.Status
 import real.erstate.realestateagency_1.data.model.ApartmentImage
 import real.erstate.realestateagency_1.databinding.FragmentRealFavBinding
+import real.erstate.realestateagency_1.ui.fragment.dashboard.DashboardFragment
+import real.erstate.realestateagency_1.ui.fragment.dashboard.real.RealSearchFragment
+import real.erstate.realestateagency_1.ui.fragment.home.HomeFragment
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.RealEstateFragment
 import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.AdapterViewPager
+import real.erstate.realestateagency_1.ui.fragment.home.real_estate.view_pager.Model
+import real.erstate.realestateagency_1.ui.fragment.notifications.NotificationsFragment.Companion.ID_FAV_QWE
 
 
 class RealFavFragment : Fragment() {
 
     private lateinit var binding:FragmentRealFavBinding
     private val viewModel: FavRealViewModel by viewModel()
-
-    private val args by navArgs<RealFavFragmentArgs>()
     private var isButtonClicked = false
     var g = ""
+    private lateinit var model : Model
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentRealFavBinding.inflate(inflater,container,false)
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        binding.shimmer.startShimmer()
+
         initView()
         onClik()
         return binding.root
@@ -78,44 +83,61 @@ class RealFavFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun onViewModel() {
-        binding.con.isVisible = true
-        binding.shimmer.isVisible = false
         viewModel.loading.observe(requireActivity()) {
-            binding.shimmer.isVisible = false
+            binding.shimmer.isVisible = it
         }
-
-        viewModel.getImage(args.lkjh.status).observe(requireActivity()) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    binding.con.isVisible = true
-                    viewModel.loading.postValue(false)
-                    Log.i("hbhuju", "onViewModel:${it.data}")
-                    binding.item.tvTitle.setText(it.data?.title)
-                    binding.item.tvDesc.text = it.data?.description
-                    binding.item.tvDil.setText(it.data?.type?.title)
-                    binding.item.tvLocation.text = it.data?.address
-                    binding.item.tvRoom.text = it.data?.room_count
-                    binding.item.tvKm.text =  it.data?.square
-                    binding.item.tvSzsd.text = it.data?.currency?.symbol
-                    binding.item.document.text = "Документы : ${it.data?.document?.title}"
-                    binding.item.floor.text = "Этажность : ${it.data?.floor?.title}"
-                    binding.item.comunikation.text = "Коммуникации : ${it.data?.communications}"
-                    binding.item.series.text = "Состояние :${it.data?.series?.title}"
-                    val pri = it.data?.price
-                    val formattedNumber = pri?.replace(".0+$".toRegex(), "")
-                    binding.item.tvSan.text = formattedNumber
-                    binding.item.tvName.text = it.data?.author?.first_name
-                   // val adapterViewPager = AdapterViewPager(requireActivity(),args.lkjh)
-                    Log.i("sxdcfr", "onViewModel:$it")
-                   // binding.item.vpv.adapter = adapterViewPager
-                    binding.item.dotsIndicator.attachTo(binding.item.vpv)
-                    g = it.data?.apartment_images.toString()
+        if (arguments != null) {
+            model = arguments?.getSerializable(ID_FAV_QWE) as Model
+            Log.i("cdvfbgnh", "onViewModel:${model.img}")
+            viewModel.getImage(model.img).observe(requireActivity()) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        viewModel.loading.postValue(false)
+                        Log.i("hbhuju", "onViewModel:${it.data}")
+                        binding.item.tvTitle.setText(it.data?.title)
+                        binding.item.tvDesc.text = it.data?.description
+                        binding.item.tvDil.setText(it.data?.type?.title)
+                        binding.item.tvLocation.text = it.data?.address
+                        binding.item.tvRoom.text = it.data?.room_count
+                        binding.item.tvKm.text = it.data?.square
+                        binding.item.document.text = "Документы : ${it.data?.document?.title}"
+                        binding.item.floor.text = "Этажность : ${it.data?.floor?.title}"
+                        binding.item.comunikation.text = "Коммуникации : ${it.data?.communications}"
+                        binding.item.series.text = "Состояние :${it.data?.series?.title}"
+                        val pri = it.data?.price
+                        binding.item.tvSzsd.text = it.data?.currency?.symbol
+                        val formattedNumber = pri?.replace(".0+$".toRegex(), "")
+                        binding.item.tvSan.text = formattedNumber
+                        binding.item.tvName.text = it.data?.author?.first_name
+                        binding.con.isVisible = true
+                        val adapterViewPager =
+                            it.data?.let { it1 -> AdapterViewPager(requireActivity(), it1) }
+                        Log.i("sxdcfr", "onViewModel:${it.data}")
+                        binding.item.vpv.adapter = adapterViewPager
+                        binding.item.dotsIndicator.attachTo(binding.item.vpv)
+                        val lat = it.data?.lat
+                        adapterViewPager?.setOnItemClickListener(object :
+                            AdapterViewPager.OnItemClickListener {
+                            override fun onItemClick(image: ApartmentImage) {
+                                val mi = Model(img = it.data.id)
+                                findNavController().navigate(R.id.photoSearchFragment, bundleOf(
+                                    RealSearchFragment.ID_SEACH to mi)
+                                )
+                            }
+                        })
+                        binding.item.tvPh.setOnClickListener {
+                            val formattedNumber = lat?.replace(".0+$".toRegex(), "")
+                            if (formattedNumber != null) {
+                                makePhoneCall(formattedNumber)
+                            }
+                        }
+                    }
+                    Status.ERROR -> {
+                        viewModel.loading.postValue(true)
+                        Log.i("olerrt", "initViewModel:${it.message}")
+                    }
+                    Status.LOADING -> viewModel.loading.postValue(true)
                 }
-                Status.ERROR -> {
-                    viewModel.loading.postValue(true)
-                    Log.i("olerrt", "initViewModel:${it.message}")
-                }
-                Status.LOADING -> viewModel.loading.postValue(true)
             }
         }
     }
@@ -155,6 +177,10 @@ class RealFavFragment : Fragment() {
         } catch (e: ActivityNotFoundException) {
             e.printStackTrace()
         }
+    }
+
+    companion object {
+        const val ID_REAL_FAV = "asdfqw"
     }
 
 }
